@@ -35,6 +35,7 @@ import org.hl7.fhir.utilities.TextFile;
 import org.hl7.fhir.utilities.Utilities;
 import org.hl7.fhir.utilities.npm.FilesystemPackageCacheManager;
 import org.hl7.fhir.utilities.npm.ToolsVersion;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -72,6 +73,7 @@ class FHIRMappingHelperUnitTests implements ITransformerServices {
 	
 	
 	@Test
+	@Disabled("This microservice is not yet ready")
 	@DisplayName("Transform example XML to FHIR")
 	void exampleTransformXMLtoFHIR() throws Exception {
 		checkLoad();
@@ -92,6 +94,7 @@ class FHIRMappingHelperUnitTests implements ITransformerServices {
 
 		
 	@Test
+	@Disabled("This microservice is not yet ready")
 	@DisplayName("Transform example R3 to R4")
 	void exampleTransformHelloWord() throws Exception {
 		checkLoad();
