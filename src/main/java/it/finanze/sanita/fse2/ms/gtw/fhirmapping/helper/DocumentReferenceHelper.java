@@ -121,14 +121,14 @@ public class DocumentReferenceHelper {
 		dr.setSubject(ref);
 	}
 
-	public static void addContent(DocumentReference dr, String formatCode, String repositoryUniqueID, String mimeType, byte[] hash, int size, String languageCode) {
+	public static void addContent(DocumentReference dr, String formatCode, String repositoryUniqueID, String mimeType, String hash, int size, String languageCode) {
 		List<DocumentReferenceContentComponent> contents = new ArrayList<DocumentReference.DocumentReferenceContentComponent>();
 		DocumentReferenceContentComponent content = new DocumentReferenceContentComponent();
 		content.setFormat(new Coding(null, formatCode, null));
 		Attachment attachment = new Attachment();
 		attachment.setUrl(repositoryUniqueID);
 		attachment.setContentType(mimeType);
-		attachment.setHash(hash);
+		attachment.setHash(hash.getBytes());
 		attachment.setSize(size);
 		attachment.setLanguage(languageCode);
 		content.setAttachment(attachment);
@@ -157,7 +157,7 @@ public class DocumentReferenceHelper {
 	 * @param dataValidazione		data di validazione del documento
 	 * @return
 	 */
-	public static DocumentReference createDocumentReference(Integer size, byte[] hash, String formatCode, 
+	public static DocumentReference createDocumentReference(Integer size, String hash, String formatCode, 
 			String facilityTypeCode, String patientID, String repositoryUniqueID, List<String> eventCode, 
 			String practiceSettingCode, String serviceStartTime, String serviceStopTime, String referencedID, String securityLabel, String masterIdentifier, 
 			String tipoDocumentoLivAlto, String typeCode, Date dataValidazione, String author, String authenticator, String custodian) {

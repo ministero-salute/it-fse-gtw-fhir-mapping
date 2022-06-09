@@ -23,7 +23,7 @@ import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.ErrorResponseDTO;
  *
  *	Controller document reference.
  */
-@RequestMapping(path = "/v1")
+@RequestMapping(path = "/v1.0.0")
 @Tag(name = "Servizio generazione document reference")
 public interface IDocumentReferenceCTL {
   
