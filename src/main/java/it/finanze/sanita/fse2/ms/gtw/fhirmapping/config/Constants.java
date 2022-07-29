@@ -42,7 +42,15 @@ public final class Constants {
 		 * Configuration mongo repository path.
 		 */
 		public static final String REPOSITORY_MONGO = "it.sanita.fse.fhirmapping.repository";
-		 
+
+		public static final class Collections {
+
+			public static final String XSL_TRANSFORM = "xsl_transform";
+
+			private Collections() {
+
+			}
+		}
 		
 		private ComponentScan() {
 			//This method is intentionally left blank.
@@ -52,6 +60,8 @@ public final class Constants {
  
 	public static final class Profile {
 		public static final String TEST = "test";
+
+		public static final String TEST_PREFIX = "test_";
 
 		/** 
 		 * Constructor.

@@ -4,8 +4,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.Base64;
+import java.util.UUID;
 
 import org.apache.commons.codec.binary.Hex;
+import org.hl7.fhir.r4.model.Identifier;
 
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.BusinessException;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +29,7 @@ public final class StringUtility {
 	 * @return		{@code true} if the String passed as parameter is null or empty.
 	 */
 	public static boolean isNullOrEmpty(final String str) {
-	    boolean out = false;
-		if (str == null || str.isEmpty()) {
-			out = true;
-		}
-		return out;
+		return str == null || str.isEmpty();
 	}
 
 	/**
@@ -104,5 +102,17 @@ public final class StringUtility {
 			throw new BusinessException("Error to get filename from complete path " , ex);
 		}
 		return output;
+	}
+
+	public static String generateUUID() {
+	    return UUID.randomUUID().toString();
+	}
+
+	public static String getIdentifierAsString(final Identifier identifier) {
+		if (identifier != null && identifier.getSystem() != null && identifier.getValue() != null) {
+			return (identifier.getSystem() + "|" + identifier.getValue());
+		} else {
+			return null;
+		}
 	}
  }

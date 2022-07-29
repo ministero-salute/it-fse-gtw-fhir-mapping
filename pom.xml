@@ -16,18 +16,6 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<!-- FHIR -->
-	<repositories>
-		<repository>
-			<id>oss-snapshot</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-		</repository>
-		<repository>
-			<id>oss-releases</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</repositories>
-
 	<properties>
 		<!-- Application -->
 		<java.version>1.8</java.version>
@@ -37,6 +25,12 @@
 		<config.infra>${project.basedir}/infrastructure</config.infra>
 		<container.output>target/container</container.output>
 		<container.output.runtime>${container.output}/runtime</container.output.runtime>
+		<sonar.exclusions>
+			src/main/java/it/finanze/sanita/fse2/ms/gtw/**/dto/**/*.*,
+			src/main/java/it/finanze/sanita/fse2/ms/gtw/**/utility/**/*.*,
+			src/main/java/it/finanze/sanita/fse2/ms/gtw/**/config/**/*.*,
+			src/main/java/it/finanze/sanita/fse2/ms/gtw/**/repository/**/*.*
+		</sonar.exclusions>
 	</properties>
 
 	<dependencies>
@@ -76,7 +70,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.6.7</version>
+			<version>1.6.9</version>
 		</dependency>
 
 		<!-- LOGBACK JSON -->
@@ -96,13 +90,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
-		</dependency>
-
-		<!-- MAPPER -->
-		<dependency>
-			<groupId>org.modelmapper.extensions</groupId>
-			<artifactId>modelmapper-spring</artifactId>
-			<version>2.4.2</version>
 		</dependency>
 
 		<!-- TEST -->
@@ -134,6 +121,34 @@
 			<artifactId>org.hl7.fhir.convertors</artifactId>
 			<version>5.4.0</version>
 		</dependency>
+		
+	    <dependency>
+	        <groupId>ca.uhn.hapi.fhir</groupId>
+	        <artifactId>hapi-fhir-server</artifactId>
+			<version>5.4.0</version>
+	    </dependency>
+
+		<dependency>
+		    <groupId>org.thymeleaf</groupId>
+		    <artifactId>thymeleaf</artifactId>
+		</dependency>
+	    
+		<dependency>
+		    <groupId>org.fhir</groupId>
+		    <artifactId>ucum</artifactId>
+		    <version>1.0.3</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.github.ben-manes.caffeine</groupId>
+		    <artifactId>caffeine</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>10.1</version>
+		</dependency>
 
 		<!-- TRACING -->
 		<dependency>
@@ -141,24 +156,18 @@
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
 
-		<!-- SCHEMATRON -->
 		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.14.3</version>
-		</dependency>
-		<dependency>
-			<groupId>com.helger</groupId>
-			<artifactId>ph-schematron</artifactId>
-			<version>5.6.5</version>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.14.3</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
 		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf</artifactId>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.6</version>
 		</dependency>
-
+		
 	</dependencies>
 
 	<dependencyManagement>
@@ -187,7 +196,15 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.2</version>
+				<version>0.8.8</version>
+				<configuration>
+					<excludes>
+						<exclude>src/main/java/it/finanze/sanita/fse2/ms/gtw/**/dto/**/*.*</exclude>
+						<exclude>src/main/java/it/finanze/sanita/fse2/ms/gtw/**/utility/**/*.*</exclude>
+						<exclude>src/main/java/it/finanze/sanita/fse2/ms/gtw/**/config/**/*.*</exclude>
+						<exclude>src/main/java/it/finanze/sanita/fse2/ms/gtw/**/repository/**/*.*</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>

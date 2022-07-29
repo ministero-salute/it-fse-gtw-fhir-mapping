@@ -4,8 +4,6 @@
 package it.finanze.sanita.fse2.ms.gtw.fhirmapping.utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,12 +22,12 @@ public class JsonUtility {
 		// Empty constructor.
 	}
 
-	private static ObjectMapper mapper = new ObjectMapper();
+	private static final ObjectMapper mapper = new ObjectMapper();
 
 	/**
 	 * Methods that converts an Object to a JSON string.
 	 * 
-	 * @param oggetto Object to convert.
+	 * @param obj Object to convert.
 	 * @return JSON String representation of the Object.
 	 */
 	public static <T> String objectToJson(T obj) {
@@ -38,7 +36,7 @@ public class JsonUtility {
 		try {
 			jsonString = mapper.writeValueAsString(obj);
 		} catch (Exception e) {
-			log.error("Errore durante la conversione da oggetto {} a string json: {}", obj.getClass(), e);
+			log.error("Errore durante la conversione da oggetto {} a string json: {}", obj.getClass(), e.getMessage());
 		}
 
 		return jsonString;
@@ -47,7 +45,7 @@ public class JsonUtility {
 	/**
 	 * Methods that converts a JSON String to a Class of a defined type.
 	 * 
-	 * @param stringa JSON String representation of the Object.
+	 * @param jsonString JSON String representation of the Object.
 	 * @return Object created from the JSON String or {@code null} if the conversion
 	 *         fails.
 	 */
@@ -56,28 +54,9 @@ public class JsonUtility {
 		try {
 			obj = mapper.readValue(jsonString, clazz);
 		} catch (Exception e) {
-			log.error("Errore durante la conversione da stringa json a oggetto: {}", e);
+			log.error("Errore durante la conversione da stringa json a oggetto: {}", e.getMessage());
 		}
 
 		return obj;
 	}
-
-	/**
-	 * Methods that converts a JSON String to a Node structure.
-	 * 
-	 * @param stringa JSON String representation of the Object.
-	 * @return ObjectNode created from the JSON String or {@code null} if the
-	 *         conversion fails.
-	 */
-	public static ObjectNode getNodeFromJson(String jsonString) {
-		ObjectNode obj = null;
-		try {
-			obj = mapper.readValue(jsonString, ObjectNode.class);
-		} catch (Exception e) {
-			log.error("Errore durante la conversione da stringa json a struttura a nodi: {}", e);
-		}
-
-		return obj;
-	}
-
 }
