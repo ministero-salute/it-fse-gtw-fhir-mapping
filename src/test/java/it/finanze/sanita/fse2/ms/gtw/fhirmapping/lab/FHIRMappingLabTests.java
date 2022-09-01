@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -44,6 +43,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.Constants;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.DocumentReferenceDTO;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.BusinessException;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.entity.XslTransformETY;
@@ -56,7 +56,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("test")
+@ActiveProfiles(Constants.Profile.TEST)
 @Slf4j
 class FHIRMappingLabTests {
 

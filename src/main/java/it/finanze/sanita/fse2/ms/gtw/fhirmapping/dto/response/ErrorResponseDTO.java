@@ -7,6 +7,7 @@ import javax.validation.constraints.Size;
 import io.swagger.v3.oas.annotations.media.Schema;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.AbstractDTO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
@@ -17,6 +18,7 @@ import lombok.Data;
  * 	Error response.
  */
 @Data
+@EqualsAndHashCode(callSuper=true)
 public class ErrorResponseDTO extends AbstractDTO {
 
 	/**

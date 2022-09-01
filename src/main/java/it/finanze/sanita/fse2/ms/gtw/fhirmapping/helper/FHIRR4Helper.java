@@ -70,6 +70,7 @@ public class FHIRR4Helper {
 		return parser.encodeResourceToString(resource);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> T deserializeResource(Class<? extends IBaseResource> resourceClass, String input, Boolean flagJson) {
 		IParser parser = null;
 		if (flagJson!=null && flagJson) {

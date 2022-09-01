@@ -4,6 +4,7 @@ import javax.validation.constraints.Size;
 
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.AbstractDTO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=true)
 public class DocumentReferenceResDTO extends AbstractDTO {
 
 	/**
