@@ -59,7 +59,7 @@ public class FhirResourceSRV implements IFhirResourceSRV {
             if (transform != null) {
             	cda = cda.replace("xmlns=\"urn:hl7-org:v3\"", "").replace("xmlns:mif=\"urn:hl7-org:v3/mif\"", "");
             	
-                log.info("XSLT found on database, executing transformation");
+                log.debug("XSLT found on database, executing transformation");
                 
                 final String fhirXML = FHIRR4Helper.trasform(transform, cda.getBytes(StandardCharsets.UTF_8));
                 final Bundle bundle = FHIRR4Helper.deserializeResource(Bundle.class, fhirXML, false);

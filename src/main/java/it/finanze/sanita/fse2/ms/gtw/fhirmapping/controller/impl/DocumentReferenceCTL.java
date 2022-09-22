@@ -29,7 +29,7 @@ public class DocumentReferenceCTL implements IDocumentReferenceCTL {
 
 	@Override
 	public DocumentReferenceResDTO generateDocumentReference(FhirResourceDTO fhirResourceDTO, HttpServletRequest request) {
-		log.info("Generate document reference - START");
+		log.debug("Generate document reference - START");
 		DocumentReferenceResDTO output = new DocumentReferenceResDTO();
 		try {
 			boolean isFhirResourceNull = fhirResourceDTO == null;
@@ -43,7 +43,7 @@ public class DocumentReferenceCTL implements IDocumentReferenceCTL {
 				String bundleJson = fhirResourceSRV.fromCdaToJson(fhirResourceDTO.getCda(), fhirResourceDTO.getDocumentReferenceDTO());
 				output.setJson(bundleJson);
 			}
-			log.info("Generate document reference - END");
+			log.debug("Generate document reference - END");
 		} catch(Exception ex) {
 			output.setErrorMessage(ex.getMessage());
 		}
