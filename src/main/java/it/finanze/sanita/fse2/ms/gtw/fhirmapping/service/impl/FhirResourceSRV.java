@@ -3,27 +3,38 @@ package it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.impl;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.transform.Transformer;
 
+import org.hl7.fhir.r4.model.Base;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Bundle.HTTPVerb;
 import org.hl7.fhir.r4.model.DocumentReference;
+import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
+import org.hl7.fhir.r4.model.Property;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.Constants;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.FhirTransformCFG;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.InfoResourceDTO;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.DocumentReferenceDTO;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.enums.TransformALGEnum;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.enums.WeightFhirResEnum;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.BusinessException;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.MissingXsltException;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.helper.CDAHelper;
@@ -47,6 +58,10 @@ public class FhirResourceSRV implements IFhirResourceSRV {
 
     @Autowired
     private IXslTransformRepo xsltRepo;
+    
+    @Autowired
+    private FhirTransformCFG fhirTransformCFG;
+ 
 
     @Override
     public String fromCdaToJson(String cda, final DocumentReferenceDTO documentReferenceDTO) {
@@ -59,13 +74,21 @@ public class FhirResourceSRV implements IFhirResourceSRV {
             if (transform != null) {
             	cda = cda.replace("xmlns=\"urn:hl7-org:v3\"", "").replace("xmlns:mif=\"urn:hl7-org:v3/mif\"", "");
             	
-                log.debug("XSLT found on database, executing transformation");
+                log.info("XSLT found on database, executing transformation");
                 
                 final String fhirXML = FHIRR4Helper.trasform(transform, cda.getBytes(StandardCharsets.UTF_8));
                 final Bundle bundle = FHIRR4Helper.deserializeResource(Bundle.class, fhirXML, false);
-                 
-				for(BundleEntryComponent entry : bundle.getEntry()) { 
-					Resource resource = entry.getResource(); 
+
+                log.info("Bundle start entry size : " + bundle.getEntry().size());
+                if(TransformALGEnum.KEEP_FIRST.equals(fhirTransformCFG.getAlgToRemoveDuplicate())) {
+                	bundle.getEntry().removeAll(chooseFirstBetweenDuplicate(bundle.getEntry()));
+                } else {
+                	bundle.setEntry(chooseMajorSize(bundle.getEntry(),fhirTransformCFG.getAlgToRemoveDuplicate()));
+                } 
+                
+                log.info("Bundle end entry size : " + bundle.getEntry().size());
+				for(BundleEntryComponent entry : bundle.getEntry()) {
+					Resource resource = entry.getResource();
 					InfoResourceDTO info = null;
 
 					if (ResourceType.DocumentReference.equals(resource.getResourceType())){
@@ -84,7 +107,7 @@ public class FhirResourceSRV implements IFhirResourceSRV {
 							Identifier identifier = new Identifier();
 							
 							if(practPR!=null && practPR.getIdentifierFirstRep()!=null && organizationPR!=null && organizationPR.getIdentifierFirstRep()!=null) {
-								String system = practPR.getIdentifierFirstRep().getSystem() + organizationPR.getIdentifierFirstRep().getSystem();
+								String system = "urn:"+practPR.getIdentifierFirstRep().getSystem().replace("urn:oid:", "") + organizationPR.getIdentifierFirstRep().getSystem().replace("urn:oid:", "-");
 								String value  = practPR.getIdentifierFirstRep().getValue()  + organizationPR.getIdentifierFirstRep().getValue();
 								identifier.setSystem(system);
 								identifier.setValue(value);
@@ -156,6 +179,7 @@ public class FhirResourceSRV implements IFhirResourceSRV {
 	private InfoResourceDTO getInfoResource(final Resource resource) {
 		InfoResourceDTO info = new InfoResourceDTO();
 		info.setMethod(HTTPVerb.POST);
+		info.setUrl(resource.getClass().getSimpleName());
 		info.setIdentifier(getIdentifier(resource));
 
 		if(info.getIdentifier() != null && StringUtility.getIdentifierAsString(info.getIdentifier())!=null){
@@ -165,4 +189,67 @@ public class FhirResourceSRV implements IFhirResourceSRV {
 
 		return info;
 	}
+	
+	private List<BundleEntryComponent> chooseFirstBetweenDuplicate(List<BundleEntryComponent> entryComponent){
+		List<BundleEntryComponent> listToRemove = new ArrayList<>();
+		
+		Map<String,BundleEntryComponent> tempMap = new HashMap<>();
+		for(BundleEntryComponent entry : entryComponent) {
+			if(!tempMap.containsKey(entry.getResource().getId())){
+				tempMap.put(entry.getResource().getId(), entry);
+			} else {
+				listToRemove.add(entry);
+			}
+		}
+		return listToRemove;
+	} 
+	
+	private List<BundleEntryComponent> chooseMajorSize(List<BundleEntryComponent> entries,final TransformALGEnum transfAlg) {
+
+        Map<String, BundleEntryComponent> toKeep = new HashMap<>();;
+
+        for (BundleEntryComponent resourceEntry : entries) {
+            if (!toKeep.containsKey(resourceEntry.getResource().getId())) {
+                toKeep.put(resourceEntry.getResource().getId(), resourceEntry);
+            } else {
+                // Calculate weight and compare each other
+                final long newEntryWeight = calculateWeight(resourceEntry,transfAlg);
+                final long oldEntryWeight = calculateWeight(toKeep.get(resourceEntry.getResource().getId()),transfAlg);
+
+                if ((oldEntryWeight < newEntryWeight) || 
+                		(oldEntryWeight == newEntryWeight  && TransformALGEnum.KEEP_RICHER_DOWN.equals(transfAlg))) {
+                    // Must override entry with a richer one
+                    toKeep.put(resourceEntry.getResource().getId(), resourceEntry);
+                }
+            }
+        }
+        
+        return new ArrayList<>(toKeep.values());
+    }
+
+    private long calculateWeight(final BundleEntryComponent bundleEntryComponent,final TransformALGEnum transfAlg) {
+    	long output = 0L;
+    	if(TransformALGEnum.KEEP_LONGER.equals(transfAlg)) {
+    		output = new Gson().toJson(bundleEntryComponent.getResource()).length();	
+    	} else if(TransformALGEnum.KEEP_RICHER_UP.equals(transfAlg) || TransformALGEnum.KEEP_RICHER_DOWN.equals(transfAlg)) {
+    		output = bundleEntryComponent.getResource().listChildrenByName("*").size();
+    	} else if(TransformALGEnum.KEEP_PRIOR.equals(transfAlg)){
+    		Property prop =  bundleEntryComponent.getResource().getChildByName("name");
+    		for(Base entry : prop.getValues()) {
+    			if(entry instanceof HumanName) {
+    				HumanName human = (HumanName)entry;
+    				if(human.getText()!=null && human.getText().contains(Constants.XSLT.PRIORITY_CONST)) {
+    					String text = human.getText().replace(Constants.XSLT.PRIORITY_CONST, "");
+    					WeightFhirResEnum val = WeightFhirResEnum.valueOf(text);
+    					if(val!=null) {
+    						output = val.getWeight();
+    					}
+    				}
+    			}
+    		}
+    	}
+    	return output;
+    }
+    
+   
 }

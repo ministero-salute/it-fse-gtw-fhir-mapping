@@ -7,10 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
+import static org.mockito.BDDMockito.given;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,11 +23,18 @@ import java.util.UUID;
 import org.apache.commons.io.FileUtils;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
+import org.hl7.fhir.common.hapi.validation.support.CommonCodeSystemsTerminologyService;
+import org.hl7.fhir.common.hapi.validation.support.InMemoryTerminologyServerValidationSupport;
+import org.hl7.fhir.common.hapi.validation.support.NpmPackageValidationSupport;
+import org.hl7.fhir.common.hapi.validation.support.ValidationSupportChain;
+import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
+import org.hl7.fhir.r4.model.Patient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,6 +42,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -43,9 +53,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
+import ca.uhn.fhir.context.support.DefaultProfileValidationSupport;
+import ca.uhn.fhir.validation.FhirValidator;
+import ca.uhn.fhir.validation.IValidatorModule;
+import ca.uhn.fhir.validation.ResultSeverityEnum;
+import ca.uhn.fhir.validation.SingleValidationMessage;
+import ca.uhn.fhir.validation.ValidationResult;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.Constants;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.FhirTransformCFG;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.DocumentReferenceDTO;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.enums.TransformALGEnum;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.BusinessException;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.helper.FHIRR4Helper;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.entity.XslTransformETY;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.scheduler.UpdateSingletonScheduler;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.IFhirResourceSRV;
@@ -61,17 +80,19 @@ import lombok.extern.slf4j.Slf4j;
 class FHIRMappingLabTests {
 
 	private static final String TEMPLATE_ID_ROOT = "2.16.840.1.113883.2.9.10.1.1";
-	
+
 	@Autowired
 	IFhirResourceSRV fhirResourceSRV;
 
 	@Autowired
 	UpdateSingletonScheduler scheduler;
 
+	@MockBean
+    private FhirTransformCFG fhirTransformCFG;
+
 	@Autowired
 	MongoTemplate mongoTemplate;
 
-	
 	@BeforeEach
 	void setup() {
 		String nomeFile = "ref_med_lab.xsl";
@@ -85,6 +106,7 @@ class FHIRMappingLabTests {
 		query.addCriteria(Criteria.where("name_xsl_transform").is(nomeFile));
 		mongoTemplate.remove(query, XslTransformETY.class);
 	}
+
 	private XslTransformETY buildXslETY(String nomeFile,String templateIdRoot) {
 		byte[] content = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/"+nomeFile);
 		XslTransformETY transformETY = new XslTransformETY();
@@ -93,34 +115,17 @@ class FHIRMappingLabTests {
 		transformETY.setTemplateIdRoot(templateIdRoot);
 		transformETY.setTemplateIdExtension("1.0");
 		transformETY.setContentXslTransform(new Binary(BsonBinarySubType.BINARY, content));
+		
 		return transformETY;
 	}
 
-
 	@ParameterizedTest
-	@ValueSource(strings = {"RefertoDiLaboratorio.json"})
-	void completeTransformation(final String outputFilePath) {
-
-		final byte[] xslt = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/ref_med_lab.xsl");
-		assumeFalse(xslt == null, "XSLT file is required for the purpose of the test");
-
-		XslTransformETY xslEntity = new XslTransformETY();
-		xslEntity.setContentXslTransform(new Binary(xslt));
-		xslEntity.setLastUpdateDate(new Date());
-		// given(xsltRepo.getXsltByTemplateId(anyString())).willReturn(xslEntity);
-
-		final byte[] cda = FileUtility.getFileFromInternalResources(
-				"referto-medicina-laboratorio/example/CDA_Referto_di _Medicina_di_Laboratorio_ES2_Complesso.xml");
-		assumeFalse(cda == null, "Cda file is required for the purpose of the test");
-
-
-		DocumentReferenceDTO documentReferenceDTO = new DocumentReferenceDTO(
-				1000, UUID.randomUUID().toString(), "facilityTypeCode", new ArrayList<>(), "practiceSettingCode", "patientID", "tipoDocumentoLivAlto", "repositoryUniqueID", null, null, "identificativoDoc");
-
-		final String jsonFhir = fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO);
+	@ValueSource(strings = {"RefertoDiLaboratorioNonITI.json"})
+	void completeTransformation(final String outputFilePath) throws IOException {
+		final String jsonFhir = transformAndGet();
 		assertNotNull(jsonFhir, "Transformation not handled correctly");
 
-		try (FileWriter fw = new FileWriter(outputFilePath, false)) {
+		try (FileWriter fw = new FileWriter(new File("src//test//resources//fhirBundle", outputFilePath), false)) {
 			fw.write(jsonFhir);
 		} catch (Exception e) {
 			log.error("Error: ", e);
@@ -221,24 +226,24 @@ class FHIRMappingLabTests {
 	}
 
 	@Test
-    void updateTest() {
+	void updateTest() {
 
-        final String typeIdExtension = TEMPLATE_ID_ROOT;
+		final String typeIdExtension = TEMPLATE_ID_ROOT;
 		XslTransformSingleton.removeInstance(typeIdExtension);
-    
-        log.info("Execution transformation to populate singleton");
-		 
+
+		log.info("Execution transformation to populate singleton");
+
 		final byte[] cda = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/CDA_Referto_di _Medicina_di_Laboratorio_ES2_Complesso.xml");
 		final DocumentReferenceDTO documentReferenceDTO = new DocumentReferenceDTO(1000, UUID.randomUUID().toString(), "facilityTypeCode", new ArrayList<>(), "practiceSettingCode", "patientID", "tipoDocumentoLivAlto", "repositoryUniqueID", null, null, "identificativoDoc");
 		fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO);
 
 		log.info("Transformation complete");
 
-        XslTransformSingleton instance = XslTransformSingleton.getInstance(typeIdExtension);
+		XslTransformSingleton instance = XslTransformSingleton.getInstance(typeIdExtension);
 
-        assertNotNull(instance);
-        assertNotNull(instance.getTransformer());
-        assertEquals(typeIdExtension, instance.getTypeIdExtension());
+		assertNotNull(instance);
+		assertNotNull(instance.getTransformer());
+		assertEquals(typeIdExtension, instance.getTypeIdExtension());
 		final Date lastUpdate = instance.getDataUltimoAggiornamento();
 		assertNotNull(lastUpdate);
 
@@ -258,5 +263,73 @@ class FHIRMappingLabTests {
 		scheduler.schedulingTask();
 		instance = XslTransformSingleton.getInstance(typeIdExtension);
 		assertTrue(instance.getDataUltimoAggiornamento().after(lastUpdate));
-    }
+	}
+
+	@Test
+	@Disabled
+	void validateWithProfile() throws IOException {
+		NpmPackageValidationSupport validation = new NpmPackageValidationSupport(FHIRR4Helper.getContext());
+		validation.loadPackageFromClasspath("fhirBundle/ihe.iti.mhd-4.1.0.tgz");
+		String json = transformAndGet();
+
+		ValidationSupportChain validationSupportChain = new ValidationSupportChain(
+				new DefaultProfileValidationSupport(FHIRR4Helper.getContext()),
+				new InMemoryTerminologyServerValidationSupport(FHIRR4Helper.getContext()),
+				new CommonCodeSystemsTerminologyService(FHIRR4Helper.getContext()), validation);
+
+		FhirValidator validator = FHIRR4Helper.getContext().newValidator();
+		IValidatorModule module = new FhirInstanceValidator(validationSupportChain);
+		validator.registerValidatorModule(module);
+		ca.uhn.fhir.validation.ValidationResult result = validator.validateWithResult(json);
+		assertTrue(result.isSuccessful(), "Validation of CDA should have been successful");
+		assertTrue(result.getMessages().stream().noneMatch(msg -> !ResultSeverityEnum.INFORMATION.equals(msg.getSeverity())), "No errors or warnings should have been found");
+	}
+
+	@ParameterizedTest(name = "Validate CDA removing dups with all configurations")
+	@ValueSource(strings = {"KEEP_FIRST"/*, "KEEP_LONGER", "KEEP_RICHER_UP", "KEEP_RICHER_DOWN", "KEEP_PRIOR"*/})
+	void transformAndValidate(final String configuration) {
+		
+		final TransformALGEnum config = TransformALGEnum.valueOf(configuration);
+		given(fhirTransformCFG.getAlgToRemoveDuplicate()).willReturn(config);
+
+		final String jsonFhir = transformAndGet();
+
+		ValidationSupportChain validationSupportChain = new ValidationSupportChain(
+				new DefaultProfileValidationSupport(FHIRR4Helper.getContext()),
+				new InMemoryTerminologyServerValidationSupport(FHIRR4Helper.getContext()),
+				new CommonCodeSystemsTerminologyService(FHIRR4Helper.getContext()));
+
+		FhirValidator validator = FHIRR4Helper.getContext().newValidator();
+		IValidatorModule module = new FhirInstanceValidator(validationSupportChain);
+		validator.registerValidatorModule(module);
+
+		final long start = System.currentTimeMillis();
+		ValidationResult result = validator.validateWithResult(jsonFhir);
+		for(SingleValidationMessage msg : result.getMessages()) {
+			System.out.println("SEVERITY:" + msg.getSeverity() + " MESSAGE:" + msg.getMessage()); 
+		}
+		final long end = System.currentTimeMillis();
+
+		log.info("{} - Validation time: {} ms", configuration, end - start);
+		assertTrue(result.isSuccessful(), "Validation of CDA should have been successful");
+		assertTrue(result.getMessages().stream().noneMatch(msg -> !ResultSeverityEnum.INFORMATION.equals(msg.getSeverity())), "No errors or warnings should have been found");
+	}
+
+	private String transformAndGet() {
+		final byte[] xslt = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/ref_med_lab.xsl");
+		assertNotNull(xslt, "XSLT file is required for the purpose of the test");
+		XslTransformETY xslEntity = new XslTransformETY();
+		xslEntity.setContentXslTransform(new Binary(xslt));
+		xslEntity.setLastUpdateDate(new Date());
+
+		final byte[] cda = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/CDA2_Referto_di_Medicina_di_Laboratorio1.0.xml");
+		assertNotNull(cda, "Cda file is required for the purpose of the test");
+
+		DocumentReferenceDTO documentReferenceDTO = new DocumentReferenceDTO(1000, UUID.randomUUID().toString(), "facilityTypeCode", new ArrayList<>(), "practiceSettingCode", "patientID", "tipoDocumentoLivAlto", "repositoryUniqueID", null, null, "identificativoDoc");
+
+		final String jsonFhir = fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO);
+		assertNotNull(jsonFhir, "Transformation not handled correctly");
+		return jsonFhir;
+	}
+
 }

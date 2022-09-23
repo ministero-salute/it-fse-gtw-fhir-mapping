@@ -35,11 +35,11 @@ public class FHIRClient {
 	public Bundle getDocumentReference(String drID) {
 		Validation.notNull(drID);
 		return client
-				   .search()
-				   .forResource(DocumentReference.class)
-				   .where(DocumentReference.IDENTIFIER.exactly().identifier(drID))
-				   .returnBundle(Bundle.class)
-				   .execute();
+				.search()
+				.forResource(DocumentReference.class)
+				.where(DocumentReference.IDENTIFIER.exactly().identifier(drID))
+				.returnBundle(Bundle.class)
+				.execute();
 	}
 
 	public Bundle saveBundleWithTransaction(Bundle bundle) {
@@ -47,7 +47,7 @@ public class FHIRClient {
 	}
 
 	public List<IBaseResource> saveBundleAndDRWithTransaction(Bundle bundle, Bundle dr) {
-	    return client.transaction().withResources(Arrays.asList((IBaseResource) bundle, (IBaseResource) dr)).execute();
+		return client.transaction().withResources(Arrays.asList((IBaseResource) bundle, (IBaseResource) dr)).execute();
 	}
 
 	public List<BundleEntryComponent> historyResource(Class<? extends IBaseResource> resourceClass, String id) {
@@ -74,11 +74,11 @@ public class FHIRClient {
 		if (count != null) {
 			historyTyped = historyTyped.count(count);
 		}
-		
+
 		if (since != null) {
 			historyTyped = historyTyped.since(since);
 		}
-		
+
 		return historyTyped.execute().getEntry();
 	}
 
@@ -101,7 +101,7 @@ public class FHIRClient {
 	public List<BundleEntryComponent> getResources(Class<? extends IBaseResource> resourceClass, Integer count, ICriterion<?>...criterions) {
 		Validation.notNull(resourceClass);
 		IQuery<IBaseBundle> query = client.search().forResource(resourceClass);
-		
+
 		boolean first = true;
 		for (ICriterion<?> criterion:criterions) {
 			if (first) {
@@ -136,9 +136,9 @@ public class FHIRClient {
 	public IBaseResource getResourceByUrl(Class<? extends IBaseResource> resourceClass, String url) {
 		Validation.notNull(resourceClass, url);
 		return client.read()
-		   .resource(resourceClass)
-		   .withUrl(url)
-		   .execute();
+				.resource(resourceClass)
+				.withUrl(url)
+				.execute();
 	}
 
 	public IIdType updateResource(IBaseResource resource) {
@@ -146,5 +146,6 @@ public class FHIRClient {
 		MethodOutcome outcome = client.update().resource(resource).execute();
 		return outcome.getId();
 	}
-	
+ 
+
 }

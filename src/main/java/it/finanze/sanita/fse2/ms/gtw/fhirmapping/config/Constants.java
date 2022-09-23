@@ -45,7 +45,7 @@ public final class Constants {
 
 		public static final class Collections {
 
-			public static final String XSL_TRANSFORM = "xsl_transform";
+			public static final String XSL_TRANSFORM = "xsl";
 
 			private Collections() {
 
@@ -56,6 +56,18 @@ public final class Constants {
 			//This method is intentionally left blank.
 		}
 
+	}
+
+	public static final class XSLT {
+
+		private XSLT() {
+			//This method is intentionally left blank.
+		}
+
+		/**
+		 * Constants that define xslt fields related to priority algorithm to remove duplicates.
+		 */
+		public static final String PRIORITY_CONST = "###PRIOR###";
 	}
  
 	public static final class Profile {

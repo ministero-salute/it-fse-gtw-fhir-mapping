@@ -48,7 +48,7 @@ public class DocumentReferenceHelper {
 	
 	public static void addCategory(DocumentReference dr, String tipoDocumentoLivAlto) {
 		if(dr.getCategory()!=null) {
-			dr.getCategory().add(new CodeableConcept(new Coding(null, tipoDocumentoLivAlto , null)));
+			dr.getCategory().add(new CodeableConcept(new Coding("http://terminology.hl7.org/CodeSystem/media-category", tipoDocumentoLivAlto , null)));
 		}
 	}
 	 
@@ -56,7 +56,7 @@ public class DocumentReferenceHelper {
 	public static void addContext(DocumentReference dr, ContextDTO contextDTO) {
 		try {
 			DocumentReferenceContextComponent drcc = dr.getContext();
-			Coding codeFT = new Coding(null, contextDTO.getFacilityTypeCode() , null);
+			Coding codeFT = new Coding("http://example.org", contextDTO.getFacilityTypeCode() , null);
 			CodeableConcept ccFacilityType = new CodeableConcept(codeFT);
 			drcc.setFacilityType(ccFacilityType);
 	
@@ -68,7 +68,7 @@ public class DocumentReferenceHelper {
 			}
 			drcc.setEvent(events);
 			
-			drcc.setPracticeSetting(new CodeableConcept(new Coding(null, contextDTO.getPracticeSettingCode() , null)));
+			drcc.setPracticeSetting(new CodeableConcept(new Coding("http://example.org", contextDTO.getPracticeSettingCode() , null)));
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			Period period = new Period();

@@ -1,0 +1,8 @@
+Legenda: 
+R - Removed
+A - Add
+
+
+23/09/2022
+A:
+fhir.transform.alg
