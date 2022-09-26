@@ -45,7 +45,7 @@ public final class Constants {
 
 		public static final class Collections {
 
-			public static final String XSL_TRANSFORM = "xsl";
+			public static final String XSL_TRANSFORM = "xsl_transform";
 
 			private Collections() {
 
