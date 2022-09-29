@@ -2,7 +2,7 @@ package it.finanze.sanita.fse2.ms.gtw.fhirmapping;
 
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.Constants;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.FhirResourceDTO;
-import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.DocumentReferenceResDTO;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.TransformResDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,7 +35,7 @@ class FhirClientTest extends AbstractTest {
         FhirResourceDTO fhirResourceDTO = new FhirResourceDTO();
         fhirResourceDTO.setCda(getTestCda(brokenCda));
         fhirResourceDTO.setDocumentReferenceDTO(getTestDocumentReference(brokenDocRef));
-        ResponseEntity<DocumentReferenceResDTO> response = callFhirMapping(fhirResourceDTO);
+        ResponseEntity<TransformResDTO> response = callFhirMapping(fhirResourceDTO);
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
         assertNotNull(response.getBody().getErrorMessage());
@@ -50,7 +50,7 @@ class FhirClientTest extends AbstractTest {
         FhirResourceDTO fhirResourceDTO = new FhirResourceDTO();
         fhirResourceDTO.setCda(getTestCda(brokenCda));
         fhirResourceDTO.setDocumentReferenceDTO(getTestDocumentReference(brokenDocRef));
-        ResponseEntity<DocumentReferenceResDTO> response = callFhirMapping(fhirResourceDTO);
+        ResponseEntity<TransformResDTO> response = callFhirMapping(fhirResourceDTO);
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
         assertNull(response.getBody().getErrorMessage());

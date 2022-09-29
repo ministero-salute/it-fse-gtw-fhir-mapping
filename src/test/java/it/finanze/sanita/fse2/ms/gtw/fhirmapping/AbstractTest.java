@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.DocumentReferenceDTO;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.FhirResourceDTO;
-import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.DocumentReferenceResDTO;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.TransformResDTO;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.entity.XslTransformETY;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.impl.XslTransformRepo;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.utility.JsonUtility;
@@ -50,18 +50,18 @@ public abstract class AbstractTest {
         }
     }
 
-    ResponseEntity<DocumentReferenceResDTO> callFhirMapping(FhirResourceDTO fhirResourceDTO) {
+    ResponseEntity<TransformResDTO> callFhirMapping(FhirResourceDTO fhirResourceDTO) {
         String url = "http://localhost:" +
                 webServerAppCtxt.getWebServer().getPort() +
                 webServerAppCtxt.getServletContext().getContextPath() +
-                "/v1/document-reference";
+                "/v1/documents/transform";
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
 
         HttpEntity<?> entity = new HttpEntity<>(fhirResourceDTO, headers);
 
-        return restTemplate.postForEntity(url, entity, DocumentReferenceResDTO.class);
+        return restTemplate.postForEntity(url, entity, TransformResDTO.class);
     }
 
     protected String getTestCda(boolean broken) {

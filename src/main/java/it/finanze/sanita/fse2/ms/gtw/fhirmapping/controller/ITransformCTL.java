@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.FhirResourceDTO;
-import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.DocumentReferenceResDTO;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.TransformResDTO;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.ErrorResponseDTO;
 
 /**
@@ -25,15 +25,15 @@ import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.ErrorResponseDTO;
  */
 @RequestMapping(path = "/v1")
 @Tag(name = "Servizio generazione document reference")
-public interface IDocumentReferenceCTL {
+public interface ITransformCTL {
   
-	@PostMapping("/document-reference")
+	@PostMapping("/documents/transform")
 	@Operation(summary = "Generazione document reference", description = "Generazione document reference.")
 	@ApiResponse(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = String.class)))
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Validazione eseguita senza inserimento in cache", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DocumentReferenceResDTO.class))),
-			@ApiResponse(responseCode = "201", description = "Presa in carico eseguita con successo", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DocumentReferenceResDTO.class))),
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Validazione eseguita senza inserimento in cache", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = TransformResDTO.class))),
+			@ApiResponse(responseCode = "201", description = "Presa in carico eseguita con successo", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = TransformResDTO.class))),
 			@ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = ErrorResponseDTO.class))),
 			@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = ErrorResponseDTO.class))) })
-	DocumentReferenceResDTO generateDocumentReference(@RequestBody FhirResourceDTO fhirResourceDTO,HttpServletRequest request);
+	TransformResDTO convertCDAToBundle(@RequestBody FhirResourceDTO fhirResourceDTO,HttpServletRequest request);
 
 }

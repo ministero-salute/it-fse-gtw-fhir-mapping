@@ -2,12 +2,13 @@ package it.finanze.sanita.fse2.ms.gtw.fhirmapping.controller.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.finanze.sanita.fse2.ms.gtw.fhirmapping.controller.IDocumentReferenceCTL;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.controller.ITransformCTL;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.FhirResourceDTO;
-import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.DocumentReferenceResDTO;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.TransformResDTO;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.InvalidRequestException;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.IFhirResourceSRV;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.utility.StringUtility;
@@ -22,15 +23,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-public class DocumentReferenceCTL implements IDocumentReferenceCTL {
+public class TransformCTL implements ITransformCTL {
 
 	@Autowired
 	private IFhirResourceSRV fhirResourceSRV;
 
 	@Override
-	public DocumentReferenceResDTO generateDocumentReference(FhirResourceDTO fhirResourceDTO, HttpServletRequest request) {
-		log.debug("Generate document reference - START");
-		DocumentReferenceResDTO output = new DocumentReferenceResDTO();
+	public TransformResDTO convertCDAToBundle(FhirResourceDTO fhirResourceDTO, HttpServletRequest request) {
+		log.info("Generate document reference - START");
+		TransformResDTO output = new TransformResDTO();
 		try {
 			boolean isFhirResourceNull = fhirResourceDTO == null;
 			boolean isDocumentReferenceNull = !isFhirResourceNull && fhirResourceDTO.getDocumentReferenceDTO() == null;
@@ -41,7 +42,7 @@ public class DocumentReferenceCTL implements IDocumentReferenceCTL {
 
 			if (StringUtility.isNullOrEmpty(output.getErrorMessage())) {
 				String bundleJson = fhirResourceSRV.fromCdaToJson(fhirResourceDTO.getCda(), fhirResourceDTO.getDocumentReferenceDTO());
-				output.setJson(bundleJson);
+				output.setJson(Document.parse(bundleJson));
 			}
 			log.debug("Generate document reference - END");
 		} catch(Exception ex) {

@@ -315,7 +315,11 @@
 										</xsl:for-each>
 	
 										<title value="{./section/title}" />
-										<text value="{./section/text}" />
+										<text>
+											<status value="generated" />
+											<div value="{./section/text}"/>
+										</text>
+<!-- 										<text value="{./section/text}" /> -->
 										<entry>
 											<reference value="DiagnosticReport/diagnostic-report" />
 										</entry>
@@ -370,10 +374,11 @@
 							<id value="location-encompassing-encounter" />
 
 							<identifier>
-								<system
-									value="urn:oid:{componentOf/encompassingEncounter/location/healthCareFacility/id/@root}" />
-								<value
-									value="{componentOf/encompassingEncounter/location/healthCareFacility/id/@extension}" />
+								<system value="urn:oid:{componentOf/encompassingEncounter/location/healthCareFacility/id/@root}" />
+								<value value="{componentOf/encompassingEncounter/location/healthCareFacility/id/@extension}" />
+								<assigner>
+									<display value="{componentOf/encompassingEncounter/location/healthCareFacility/id/@assigningAuthorityName}" />
+								</assigner>
 							</identifier>
 
 							<partOf>
@@ -465,8 +470,7 @@
 				</entry>
 			</xsl:if>
 
-			<xsl:if
-				test="componentOf/encompassingEncounter/location/healthCareFacility">
+			<xsl:if test="componentOf/encompassingEncounter/location/healthCareFacility">
 				<entry>
 					<fullUrl
 						value="https://example.com/base/Location/facility-location" />
@@ -474,8 +478,7 @@
 						<Location xmlns="http://hl7.org/fhir">
 							<id value="facility-location" />
 
-							<name
-								value="{componentOf/encompassingEncounter/location/healthCareFacility/location/name}" />
+							<name value="{componentOf/encompassingEncounter/location/healthCareFacility/location/name}" />
 							<xsl:call-template name="show_address">
 								<xsl:with-param name="cda_address"
 									select="componentOf/encompassingEncounter/location/healthCareFacility/location/addr" />
@@ -1189,13 +1192,11 @@
 							</identifier>
 
 							<xsl:call-template name="show_address">
-								<xsl:with-param name="cda_address"
-									select="assignedEntity/addr" />
+								<xsl:with-param name="cda_address" select="authenticator/assignedEntity/addr" />
 							</xsl:call-template>
 
 							<xsl:call-template name="show_telecom">
-								<xsl:with-param name="cda_telecom"
-									select="assignedEntity/telecom" />
+								<xsl:with-param name="cda_telecom" select="authenticator/assignedEntity/telecom" />
 							</xsl:call-template>
 
 							<name>
@@ -1689,12 +1690,15 @@
 							<code value="IMP" />
 							<display value="inpatient encounter" />
 						</class>
-						<xsl:if test="componentOf/encompassingEncounter/location">
-							<location>
-								<reference
-									value="Location/location-encompassing-encounter" />
-							</location>
-						</xsl:if>
+						
+						<location>
+							<xsl:if test="componentOf/encompassingEncounter/location/healthCareFacility">
+								<location>
+									<reference value="Location/location-encompassing-encounter" />
+								</location>
+							</xsl:if>
+						</location>
+						
 						
 						<subject>
 							<reference value="Patient/{$patientId}" />
@@ -2329,6 +2333,14 @@
 						<Media xmlns="http://hl7.org/fhir">
 							<id value="organizer-observation-media" />
 
+							<subject>
+								<reference value="Patient/{$patientId}" />
+							</subject>
+							
+							<encounter>
+								<reference value="Encounter/encounter" />
+							</encounter>
+							
 							<content>
 								<content value="{$object/value}" />
 								<data value="{$object/value/representation/@value}" />
@@ -2691,6 +2703,10 @@
 										value="{component/structuredBody/component/section/component/section/entry/act/entryRelationship/organizer/specimen/specimenRole/specimenPlayingEntity/code/@displayName}" />
 								</coding>
 							</type>
+							
+							<subject>
+								<reference value="Patient/{$patientId}" />
+							</subject>
 						</Specimen>
 					</resource>
 				</entry>

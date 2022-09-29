@@ -1,8 +1,6 @@
 package it.finanze.sanita.fse2.ms.gtw.fhirmapping.utility;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.BusinessException;
@@ -27,26 +25,6 @@ public final class FileUtility {
 	 * Constructor.
 	 */
 	private FileUtility() {
-	}
-
-
-	/**
-	 * Method to get the file's content from fs.
-	 *
-	 * @param filename	filename
-	 * @return			content
-	 */
-	public static byte[] getFileFromFS(final String filename) {
-		byte[] b = null;
-		try {
-			File f = new File(filename);
-			InputStream is = new FileInputStream(f);
-			b = getByteFromInputStream(is);
-			is.close();
-		} catch (Exception e) {
-			log.error("FILE UTILS getFileFromFS(): Errore in fase di recupero del contenuto di un file da file system. ", e);
-		}
-		return b;
 	}
 
 	/**

@@ -2,6 +2,8 @@ package it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response;
 
 import javax.validation.constraints.Size;
 
+import org.bson.Document;
+
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.AbstractDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=true)
-public class DocumentReferenceResDTO extends AbstractDTO {
+public class TransformResDTO extends AbstractDTO {
 
 	/**
 	 * Serial version uid.
@@ -27,6 +29,6 @@ public class DocumentReferenceResDTO extends AbstractDTO {
 	private String errorMessage;
 	
 	@Size(min = 0, max = 1000)
-	private String json;
+	private Document json;
 	
 }

@@ -2,7 +2,6 @@ package it.finanze.sanita.fse2.ms.gtw.fhirmapping.enums;
 
 import lombok.Getter;
 
-@Getter
 public enum WeightFhirResEnum {
 
 	HEALTHCAREFACILITY_SERVICEPROVIDERORGANIZATION("HEALTHCAREFACILITY_SERVICEPROVIDERORGANIZATION", 1),
@@ -43,25 +42,15 @@ public enum WeightFhirResEnum {
 	COMPONENT_OBSERVATION_PERFORMER_ASSIGNEDENTITY_ASSIGNEDPERSON("COMPONENT_OBSERVATION_PERFORMER_ASSIGNEDENTITY_ASSIGNEDPERSON", 0),
 	ACT_ENTRYRELATIONSHIP_ACT_PARTICIPANT_ASSIGNEDPERSON("ACT_ENTRYRELATIONSHIP_ACT_PARTICIPANT_ASSIGNEDPERSON", 1);
 	
+	@Getter
 	private String name;
-	
+		
+	@Getter
 	private Integer weight;
-	
 
 	private WeightFhirResEnum(String inName, Integer inWeight) {
 		name = inName;
 		weight = inWeight;
 	}
-	
-	public static WeightFhirResEnum fromValue(final String inName) {
-		WeightFhirResEnum output = null;
-        for (WeightFhirResEnum valueEnum : WeightFhirResEnum.values()) {
-        	if (valueEnum.getName().equalsIgnoreCase(inName)) {
-        		output = valueEnum;
-        		break;
-        	}
-        }
-		return output;
-    }
 
 }
