@@ -30,7 +30,7 @@ public class TransformCTL implements ITransformCTL {
 
 	@Override
 	public TransformResDTO convertCDAToBundle(FhirResourceDTO fhirResourceDTO, HttpServletRequest request) {
-		log.info("Generate document reference - START");
+		log.debug("Generate document reference - START");
 		TransformResDTO output = new TransformResDTO();
 		try {
 			boolean isFhirResourceNull = fhirResourceDTO == null;

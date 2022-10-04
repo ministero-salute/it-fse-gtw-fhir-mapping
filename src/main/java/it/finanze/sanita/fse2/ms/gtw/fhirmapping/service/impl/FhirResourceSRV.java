@@ -67,26 +67,26 @@ public class FhirResourceSRV implements IFhirResourceSRV {
     public String fromCdaToJson(String cda, final DocumentReferenceDTO documentReferenceDTO) {
         try {
             final String templateId = CDAHelper.extractTemplateId(cda);
-            log.info("Executing transformation of CDA with template id: {}", templateId);
+            log.debug("Executing transformation of CDA with template id: {}", templateId);
             
 			final Transformer transform = getXsltTransform(templateId);
 
             if (transform != null) {
             	cda = cda.replace("xmlns=\"urn:hl7-org:v3\"", "").replace("xmlns:mif=\"urn:hl7-org:v3/mif\"", "");
             	
-                log.info("XSLT found on database, executing transformation");
+                log.debug("XSLT found on database, executing transformation");
                 
                 final String fhirXML = FHIRR4Helper.trasform(transform, cda.getBytes(StandardCharsets.UTF_8));
                 final Bundle bundle = FHIRR4Helper.deserializeResource(Bundle.class, fhirXML, false);
 
-                log.info("Bundle start entry size : " + bundle.getEntry().size());
+                log.debug("Bundle start entry size : " + bundle.getEntry().size());
                 if(TransformALGEnum.KEEP_FIRST.equals(fhirTransformCFG.getAlgToRemoveDuplicate())) {
                 	bundle.getEntry().removeAll(chooseFirstBetweenDuplicate(bundle.getEntry()));
                 } else {
                 	bundle.setEntry(chooseMajorSize(bundle.getEntry(),fhirTransformCFG.getAlgToRemoveDuplicate()));
                 } 
                 
-                log.info("Bundle end entry size : " + bundle.getEntry().size());
+                log.debug("Bundle end entry size : " + bundle.getEntry().size());
 				for(BundleEntryComponent entry : bundle.getEntry()) {
 					Resource resource = entry.getResource();
 					InfoResourceDTO info = null;
