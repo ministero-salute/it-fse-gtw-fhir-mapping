@@ -1972,11 +1972,12 @@
 									<encounter>
 										<reference value="Encounter/encounter" />
 									</encounter>
-
+									
+									<status value="unknown"/>
+									
 									<content>
-										<content value="{./value}" />
-										<data value="{./value/representation/@value}" />
-										<contentType value="{./value/mediaType/@value}" />
+										<contentType value="{./value/@mediaType}" />
+										<data value="{./value}" />
 									</content>
 								</Media>
 							</resource>
@@ -2355,7 +2356,7 @@
 									<method>
 										<coding>
 											<code value="{./methodCode/@code}" />
-											<system value="{./methodCode/@codeSystem}" />
+											<system value="urn:oid:{./methodCode/@codeSystem}" />
 											<version value=" {./methodCode/@codeSystemName} V {./methodCode/@codeSystemVersion}" />
 											<display value="{./methodCode/@displayName}" />
 										</coding>
@@ -2590,11 +2591,13 @@
 					<resource>
 						<Media xmlns="http://hl7.org/fhir">
 							<id value="observation-media" />
+							
+							<status value="unknown"/>
 
 							<content>
 								<content value="{$object/value}" />
-								<data value="{$object/value/representation/@value}" />
-								<contentType value="{$object/value/mediaType/@value}" />
+								<data value="{$object/value/@representation}" />
+								<contentType value="{$object/value/@mediaType}" />
 							</content>
 						</Media>
 					</resource>
