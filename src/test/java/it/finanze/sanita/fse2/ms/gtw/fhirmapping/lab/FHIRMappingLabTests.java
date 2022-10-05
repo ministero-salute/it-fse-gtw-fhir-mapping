@@ -121,7 +121,7 @@ class FHIRMappingLabTests {
 	@ParameterizedTest
 	@ValueSource(strings = {"RefertoDiLaboratorioNonITI.json"})
 	void completeTransformation(final String outputFilePath) throws IOException {
-		final String jsonFhir = transformAndGet();
+		final String jsonFhir = transformAndGet("referto-medicina-laboratorio/example/CDA2_Referto_di_Medicina_di_Laboratorio1.0.xml");
 		assertNotNull(jsonFhir, "Transformation not handled correctly");
 
 		try (FileWriter fw = new FileWriter(new File("src//test//resources//fhirBundle", outputFilePath), false)) {
@@ -269,7 +269,7 @@ class FHIRMappingLabTests {
 	void validateWithProfile() throws IOException {
 		NpmPackageValidationSupport validation = new NpmPackageValidationSupport(FHIRR4Helper.getContext());
 		validation.loadPackageFromClasspath("fhirBundle/ihe.iti.mhd-4.1.0.tgz");
-		String json = transformAndGet();
+		String json = transformAndGet("referto-medicina-laboratorio/example/CDA2_Referto_di_Medicina_di_Laboratorio1.0.xml");
 
 		ValidationSupportChain validationSupportChain = new ValidationSupportChain(
 				new DefaultProfileValidationSupport(FHIRR4Helper.getContext()),
@@ -285,13 +285,13 @@ class FHIRMappingLabTests {
 	}
 
 	@ParameterizedTest(name = "Validate CDA removing dups with all configurations")
-	@ValueSource(strings = {"KEEP_FIRST", /*"KEEP_LONGER",*/ "KEEP_RICHER_UP", "KEEP_RICHER_DOWN", "KEEP_PRIOR"})
+	@ValueSource(strings = {"KEEP_FIRST", /*"KEEP_LONGER", "KEEP_RICHER_UP", "KEEP_RICHER_DOWN", "KEEP_PRIOR"*/})
 	void transformAndValidate(final String configuration) {
 		
 		final TransformALGEnum config = TransformALGEnum.valueOf(configuration);
 		given(fhirTransformCFG.getAlgToRemoveDuplicate()).willReturn(config);
 
-		final String jsonFhir = transformAndGet();
+		final String jsonFhir = transformAndGet("referto-medicina-laboratorio/example/CDA2_Referto_di_Medicina_di_Laboratorio1.0.xml");
 
 		ValidationSupportChain validationSupportChain = new ValidationSupportChain(
 				new DefaultProfileValidationSupport(FHIRR4Helper.getContext()),
@@ -316,14 +316,14 @@ class FHIRMappingLabTests {
 		// assertTrue(result.getMessages().stream().noneMatch(msg -> !ResultSeverityEnum.INFORMATION.equals(msg.getSeverity())), "No errors or warnings should have been found");
 	}
 
-	private String transformAndGet() {
+	private String transformAndGet(String cdaFilename) {
 		final byte[] xslt = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/ref_med_lab.xsl");
 		assertNotNull(xslt, "XSLT file is required for the purpose of the test");
 		XslTransformETY xslEntity = new XslTransformETY();
 		xslEntity.setContentXslTransform(new Binary(xslt));
 		xslEntity.setLastUpdateDate(new Date());
 
-		final byte[] cda = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/CDA2_Referto_di_Medicina_di_Laboratorio_ES1_complesso.xml");
+		final byte[] cda = FileUtility.getFileFromInternalResources(cdaFilename);
 		assertNotNull(cda, "Cda file is required for the purpose of the test");
 
 		DocumentReferenceDTO documentReferenceDTO = new DocumentReferenceDTO(1000, UUID.randomUUID().toString(), "facilityTypeCode", new ArrayList<>(), "practiceSettingCode", "patientID", "tipoDocumentoLivAlto", "repositoryUniqueID", null, null, "identificativoDoc");
