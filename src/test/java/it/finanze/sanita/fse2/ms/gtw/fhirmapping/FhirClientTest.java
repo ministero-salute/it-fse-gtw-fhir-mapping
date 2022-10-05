@@ -1,8 +1,9 @@
 package it.finanze.sanita.fse2.ms.gtw.fhirmapping;
 
-import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.Constants;
-import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.FhirResourceDTO;
-import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.TransformResDTO;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +13,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.*;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.Constants;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.FhirResourceDTO;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.TransformResDTO;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ComponentScan(basePackages = {Constants.ComponentScan.BASE})
@@ -43,17 +46,4 @@ class FhirClientTest extends AbstractTest {
         assertNull(response.getBody().getJson());
     }
 
-    @ParameterizedTest
-    @CsvSource({"cda, false, docRef, false"})
-    @DisplayName("successTest")
-    void successTest(String cda, boolean brokenCda, String docRef, boolean brokenDocRef) {
-        FhirResourceDTO fhirResourceDTO = new FhirResourceDTO();
-        fhirResourceDTO.setCda(getTestCda(brokenCda));
-        fhirResourceDTO.setDocumentReferenceDTO(getTestDocumentReference(brokenDocRef));
-        ResponseEntity<TransformResDTO> response = callFhirMapping(fhirResourceDTO);
-        assertEquals(200, response.getStatusCodeValue());
-        assertNotNull(response.getBody());
-        assertNull(response.getBody().getErrorMessage());
-        assertNotNull(response.getBody().getJson());
-    }
 }

@@ -144,6 +144,74 @@
       "url": "PractitionerRole?identifier=urn:2.16.840.1.113883.2.9.4.3.2-2.16.840.1.113883.2.9.4.1.3|MURRSI88Y67R012G327700102"
     }
   }, {
+    "fullUrl": "https://example.com/base/Observation/has-member-observation2-2",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "has-member-observation2-2",
+      "status": "final",
+      "code": {
+        "coding": [ {
+          "system": "urn:oid:2.16.840.1.113883.6.1",
+          "version": "LOINC",
+          "code": "xxx",
+          "display": "xxx"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-RSSMRA81T20H501L"
+      },
+      "effectiveDateTime": "2022-03-22T22:12:21+01:00",
+      "interpretation": [ {
+        "coding": [ {
+          "system": "urn:oid:1.1.1.1.1.1.1.1",
+          "version": "sistema di  codifica",
+          "code": "xxx",
+          "display": "xxx"
+        } ]
+      } ],
+      "specimen": {
+        "reference": "Specimen/specimen-entry-organizer2"
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Observation"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Observation/has-member-observation1-2",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "has-member-observation1-2",
+      "status": "final",
+      "code": {
+        "coding": [ {
+          "system": "urn:oid:2.16.840.1.113883.6.1",
+          "version": "LOINC",
+          "code": "xxx",
+          "display": "xxx"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-RSSMRA81T20H501L"
+      },
+      "effectiveDateTime": "2022-03-22T22:12:21+01:00",
+      "interpretation": [ {
+        "coding": [ {
+          "system": "urn:oid:2.16.840.1.113883.5.83",
+          "version": "sistema di  codifica",
+          "code": "xxx",
+          "display": "xxx"
+        } ]
+      } ],
+      "specimen": {
+        "reference": "Specimen/specimen-entry-organizer2"
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Observation"
+    }
+  }, {
     "fullUrl": "https://example.com/base/Observation/has-member-observation2-1",
     "resource": {
       "resourceType": "Observation",
@@ -163,7 +231,7 @@
       "effectiveDateTime": "2022-03-22T22:12:21+01:00",
       "interpretation": [ {
         "coding": [ {
-          "system": "urn:oid:2.16.840.1.113883.5.83",
+          "system": "urn:oid:1.1.1.1.1.1.1.1",
           "version": "sistema di codifica",
           "code": "xxx",
           "display": "xxx"
@@ -171,7 +239,10 @@
       } ],
       "specimen": {
         "reference": "Specimen/specimen-entry-organizer1"
-      }
+      },
+      "derivedFrom": [ {
+        "reference": "Media/organizer-observation-media2-1"
+      } ]
     },
     "request": {
       "method": "POST",
@@ -249,7 +320,10 @@
       } ],
       "specimen": {
         "reference": "Specimen/specimen-entry-organizer1"
-      }
+      },
+      "derivedFrom": [ {
+        "reference": "Media/organizer-observation-media1-1"
+      } ]
     },
     "request": {
       "method": "POST",
@@ -428,6 +502,27 @@
       "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|MGGSLV77F45N079MF"
     }
   }, {
+    "fullUrl": "https://example.com/base/Media/organizer-observation-media1-1",
+    "resource": {
+      "resourceType": "Media",
+      "id": "organizer-observation-media1-1",
+      "status": "unknown",
+      "subject": {
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-RSSMRA81T20H501L"
+      },
+      "encounter": {
+        "reference": "Encounter/encounter"
+      },
+      "content": {
+        "contentType": "application/pdf",
+        "data": "FileB64="
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Media"
+    }
+  }, {
     "fullUrl": "https://example.com/base/Location/location-encompassing-encounter",
     "resource": {
       "resourceType": "Location",
@@ -449,6 +544,27 @@
     "request": {
       "method": "POST",
       "url": "Location"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Media/organizer-observation-media2-1",
+    "resource": {
+      "resourceType": "Media",
+      "id": "organizer-observation-media2-1",
+      "status": "unknown",
+      "subject": {
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-RSSMRA81T20H501L"
+      },
+      "encounter": {
+        "reference": "Encounter/encounter"
+      },
+      "content": {
+        "contentType": "application/pdf",
+        "data": "FileB64="
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Media"
     }
   }, {
     "fullUrl": "https://example.com/base/Patient/2.16.840.1.113883.2.9.4.3.2-RSSMRA81T20H501L",
@@ -767,11 +883,11 @@
             "reference": "DiagnosticReport/diagnostic-report"
           } ]
         }, {
-          "title": "xxx",
+          "title": "XXXX",
           "code": {
             "coding": [ {
               "system": "urn:oid:2.16.840.1.113883.6.1",
-              "code": "xxx",
+              "code": "18717-9",
               "display": "xxx"
             } ]
           },
@@ -802,6 +918,8 @@
       },
       "hasMember": [ {
         "reference": "Observation/has-member-observation2-1"
+      }, {
+        "reference": "Observation/has-member-observation2-2"
       } ]
     },
     "request": {
@@ -835,6 +953,8 @@
       },
       "hasMember": [ {
         "reference": "Observation/has-member-observation1-1"
+      }, {
+        "reference": "Observation/has-member-observation1-2"
       } ]
     },
     "request": {
@@ -847,7 +967,7 @@
       "resourceType": "DocumentReference",
       "id": "document-reference",
       "masterIdentifier": {
-        "id": "identificativoDoc"
+        "value": "identificativoDoc"
       },
       "identifier": [ {
         "id": "Document00"
@@ -868,7 +988,7 @@
       "subject": {
         "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-RSSMRA81T20H501L"
       },
-      "date": "2022-10-05T15:45:06.212+02:00",
+      "date": "2022-10-05T18:16:21.503+02:00",
       "author": [ {
         "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-BNCFNC68R09F839P"
       } ],
@@ -887,7 +1007,7 @@
           "language": "it-IT",
           "url": "repositoryUniqueID",
           "size": 1000,
-          "hash": "YzBmYTZiN2QtMGY2OS00NmJlLTkwZjEtMjc4OTgwNzMxMTUz"
+          "hash": "OGViY2ZlNGItNmMwNC00M2Y3LWE4MDMtMGQ0M2Q0ZTk1MGE2"
         },
         "format": {
           "system": "urn:oid:2.16.840.1.113883.2.9.10.1.1",
@@ -897,13 +1017,13 @@
       "context": {
         "facilityType": {
           "coding": [ {
-            "system": "http://example.org",
+            "system": "urn:oid",
             "code": "facilityTypeCode"
           } ]
         },
         "practiceSetting": {
           "coding": [ {
-            "system": "http://example.org",
+            "system": "urn:oid",
             "code": "practiceSettingCode"
           } ]
         },

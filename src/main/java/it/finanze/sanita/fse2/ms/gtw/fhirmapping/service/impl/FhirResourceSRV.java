@@ -79,21 +79,21 @@ public class FhirResourceSRV implements IFhirResourceSRV {
                 final String fhirXML = FHIRR4Helper.trasform(transform, cda.getBytes(StandardCharsets.UTF_8));
                 final Bundle bundle = FHIRR4Helper.deserializeResource(Bundle.class, fhirXML, false);
 
-                log.debug("Bundle start entry size : " + bundle.getEntry().size());
+                log.debug("Bundle start entry size : {}", bundle.getEntry().size());
                 if(TransformALGEnum.KEEP_FIRST.equals(fhirTransformCFG.getAlgToRemoveDuplicate())) {
                 	bundle.getEntry().removeAll(chooseFirstBetweenDuplicate(bundle.getEntry()));
                 } else {
-                	bundle.setEntry(chooseMajorSize(bundle.getEntry(),fhirTransformCFG.getAlgToRemoveDuplicate()));
+                	bundle.setEntry(chooseMajorSize(bundle.getEntry(), fhirTransformCFG.getAlgToRemoveDuplicate()));
                 } 
                 
-                log.debug("Bundle end entry size : " + bundle.getEntry().size());
+                log.debug("Bundle end entry size : {}", bundle.getEntry().size());
 				for(BundleEntryComponent entry : bundle.getEntry()) {
 					Resource resource = entry.getResource();
 					InfoResourceDTO info = null;
 
 					if (ResourceType.DocumentReference.equals(resource.getResourceType())){
-						DocumentReference documentReferenceXslt = (DocumentReference)resource;
-						DocumentReferenceHelper.createDocumentReference(documentReferenceDTO, documentReferenceXslt, new Date());
+						DocumentReference documentReferenceXslt = (DocumentReference) resource;
+						DocumentReferenceHelper.createDocumentReference(documentReferenceDTO, documentReferenceXslt);
 					} else if (ResourceType.PractitionerRole.equals(resource.getResourceType())) {
 						PractitionerRole practitionerRole = (PractitionerRole)resource;
 						if(practitionerRole.getIdentifier()==null || practitionerRole.getIdentifier().isEmpty()) {

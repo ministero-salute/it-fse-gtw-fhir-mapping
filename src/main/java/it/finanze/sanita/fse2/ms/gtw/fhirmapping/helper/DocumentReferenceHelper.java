@@ -15,6 +15,7 @@ import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Reference;
 
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.Constants;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.ContextDTO;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.DocumentReferenceDTO;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.BusinessException;
@@ -27,48 +28,38 @@ public class DocumentReferenceHelper {
 
 	//https://1up.health/dev/fhir/resource/DocumentReference/stu3
 	
-	public static void addCustodian(DocumentReference dr, String custodian) {
-		dr.setCustodian(new Reference(custodian));
-	}
-
-	public static void addStatus(DocumentReference dr, DocumentReferenceStatus status) {
-		dr.setStatus(status);
-	}
-	
-
-	public static void addCreationTime(DocumentReference dr, Date creationTime) {
+	private static void addCreationTime(DocumentReference dr, Date creationTime) {
 		dr.setDate(creationTime);
 	}
 	
-	public static void addIdentifier(DocumentReference dr, String indentifier) {
+	private static void addIdentifier(DocumentReference dr, String indentifier) {
 		Identifier id = new Identifier();
 		id.setId(indentifier); 
 		dr.getIdentifier().add(id);
 	}
 	
-	public static void addCategory(DocumentReference dr, String tipoDocumentoLivAlto) {
+	private static void addCategory(DocumentReference dr, String tipoDocumentoLivAlto) {
 		if(dr.getCategory()!=null) {
 			dr.getCategory().add(new CodeableConcept(new Coding("http://terminology.hl7.org/CodeSystem/media-category", tipoDocumentoLivAlto , null)));
 		}
 	}
 	 
- 
-	public static void addContext(DocumentReference dr, ContextDTO contextDTO) {
+	private static void addContext(DocumentReference dr, ContextDTO contextDTO) {
 		try {
 			DocumentReferenceContextComponent drcc = dr.getContext();
-			Coding codeFT = new Coding("http://example.org", contextDTO.getFacilityTypeCode() , null);
+			Coding codeFT = new Coding("urn:oid", contextDTO.getFacilityTypeCode(), null);
 			CodeableConcept ccFacilityType = new CodeableConcept(codeFT);
 			drcc.setFacilityType(ccFacilityType);
 	
 			List<CodeableConcept> events = new ArrayList<>();
 			
 			for(String eventCode : contextDTO.getEventsCode()) {
-				CodeableConcept ccEvent = new CodeableConcept(new Coding(null, eventCode , null));
+				CodeableConcept ccEvent = new CodeableConcept(new Coding("urn:oid", eventCode , null));
 				events.add(ccEvent);
 			}
 			drcc.setEvent(events);
 			
-			drcc.setPracticeSetting(new CodeableConcept(new Coding("http://example.org", contextDTO.getPracticeSettingCode() , null)));
+			drcc.setPracticeSetting(new CodeableConcept(new Coding("urn:oid", contextDTO.getPracticeSettingCode() , null)));
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			Period period = new Period();
@@ -88,8 +79,7 @@ public class DocumentReferenceHelper {
 
 	}
  
-
-	public static void addContent(DocumentReference dr,  String repositoryUniqueID, String mimeType, String hash, int size, String languageCode) {
+	private static void addContent(DocumentReference dr,  String repositoryUniqueID, String mimeType, String hash, int size, String languageCode) {
 		Attachment attachment = new Attachment();
 		attachment.setUrl(repositoryUniqueID);
 		attachment.setContentType(mimeType);
@@ -99,9 +89,16 @@ public class DocumentReferenceHelper {
 		dr.getContent().get(0).setAttachment(attachment);
 	}
 
-	public static void addMasterIdentifier(DocumentReference dr, String masterIdentifier) {
+	private static void addMasterIdentifier(DocumentReference dr, String masterIdentifier) {
 		Identifier mid = new Identifier();
-		mid.setId(masterIdentifier);
+		
+		if (masterIdentifier.contains("^")) {
+			String[] masterIdentifierSplit = masterIdentifier.split("\\^");
+			mid.setSystem(masterIdentifierSplit[0]);
+			mid.setValue(masterIdentifierSplit[1]);
+		} else {
+			mid.setValue(masterIdentifier);
+		}
 		dr.setMasterIdentifier(mid);
 	}
 
@@ -112,13 +109,8 @@ public class DocumentReferenceHelper {
 	 * @param dataValidazione
 	 * @return
 	 */
-	public static DocumentReference createDocumentReference(final DocumentReferenceDTO documentReferenceDTO, final DocumentReference dr, final Date dataValidazione) {
+	public static DocumentReference createDocumentReference(final DocumentReferenceDTO documentReferenceDTO, final DocumentReference dr) {
 		try {
-			String language = "it-IT";
-			String mimeType = "application/pdf";
-			String entryUUID = "Document00";
-			DocumentReferenceStatus status = DocumentReferenceStatus.CURRENT;
-			
 			ContextDTO contextDTO = ContextDTO.builder()
 					.facilityTypeCode(documentReferenceDTO.getFacilityTypeCode())
 					.eventsCode(documentReferenceDTO.getEventCode())
@@ -128,18 +120,19 @@ public class DocumentReferenceHelper {
 					.build();
 
 			addContext(dr, contextDTO);
-			addContent(dr, documentReferenceDTO.getRepositoryUniqueID(), mimeType, documentReferenceDTO.getHash(), documentReferenceDTO.getSize(), language);
+			addContent(dr, documentReferenceDTO.getRepositoryUniqueID(), 
+				Constants.XSLT.BUNDLE_FHIR_MIME_TYPE, documentReferenceDTO.getHash(), 
+				documentReferenceDTO.getSize(), Constants.XSLT.BUNDLE_FHIR_LANGUAGE);
+			
 			addCategory(dr, documentReferenceDTO.getTipoDocumentoLivAlto());
-			addIdentifier(dr, entryUUID);
-			addCreationTime(dr, dataValidazione);
-			addStatus(dr, status);
+			addIdentifier(dr, Constants.XSLT.BUNDLE_FHIR_DOCUMENT_REFERENCE_ID);
+			addCreationTime(dr, new Date());
 			addMasterIdentifier(dr, documentReferenceDTO.getIdentificativoDoc());
 			return dr;
 		} catch (Exception ex) {
-			log.error("Error while create document reference : {}" , ex.getMessage());
-			throw new BusinessException("Error while create document reference : " + ex.getMessage());
+			log.error("Error while create document reference: {}", ex.getMessage());
+			throw new BusinessException("Error while create document reference", ex);
 		}
 	}
- 
 	 
 }

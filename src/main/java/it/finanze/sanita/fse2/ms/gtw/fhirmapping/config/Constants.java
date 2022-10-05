@@ -68,6 +68,21 @@ public final class Constants {
 		 * Constants that define xslt fields related to priority algorithm to remove duplicates.
 		 */
 		public static final String PRIORITY_CONST = "###PRIOR###";
+
+		/**
+		 * Constant that defines bundle fhir language.
+		 */
+		public static final String BUNDLE_FHIR_LANGUAGE = "it-IT";
+
+		/**
+		 * Constant that defines bundle fhir type.
+		 */
+		public static final String BUNDLE_FHIR_MIME_TYPE = "application/pdf";
+
+		/**
+		 * Constant that defines bundle fhir document reference identifier.
+		 */
+		public static final String BUNDLE_FHIR_DOCUMENT_REFERENCE_ID = "Document00";
 	}
  
 	public static final class Profile {

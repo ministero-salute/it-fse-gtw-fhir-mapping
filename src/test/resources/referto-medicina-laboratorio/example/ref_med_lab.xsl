@@ -1530,10 +1530,12 @@
 							<reference value="Patient/{$patientId}" />
 						</subject>
 
-						<xsl:call-template name="show_date">
-							<xsl:with-param name="cda_date" select="component/structuredBody/component/section/component/section/entry/act/effectiveTime/@value" />
-							<xsl:with-param name="tag" select="'effectiveDateTime'" />
-						</xsl:call-template>
+						<xsl:if test="component/structuredBody/component/section/component/section/entry/act/effectiveTime">
+							<xsl:call-template name="show_date">
+								<xsl:with-param name="cda_date" select="component/structuredBody/component/section/component/section/entry/act/effectiveTime/@value" />
+								<xsl:with-param name="tag" select="'effectiveDateTime'" />
+							</xsl:call-template>
+						</xsl:if>
 
 						<!-- OSSERVAZIONE SINGOLA -->
 						<xsl:if test="component/structuredBody/component/section/component/section/entry/act/entryRelationship/observation">
@@ -2636,10 +2638,7 @@
 					<DocumentReference xmlns="http://hl7.org/fhir">
 						<id value="document-reference" />
 
-						<masterIdentifier>
-							<system value="urn:oid{id/@root}" />
-							<value value="{id/@extension}" />
-						</masterIdentifier>
+						<status value="current" />
 
 						<securityLabel>
 							<coding>
@@ -2689,7 +2688,7 @@
 
 						<context>
 							<sourcePatientInfo>
-								<reference value="Patient/{recordTarget/patientRole/id/@root}-{recordTarget/patientRole/id/@extension}" />
+								<reference value="Patient/{$patientId}" />
 							</sourcePatientInfo>
 							<related>
 								<reference value="Composition/composition" />
