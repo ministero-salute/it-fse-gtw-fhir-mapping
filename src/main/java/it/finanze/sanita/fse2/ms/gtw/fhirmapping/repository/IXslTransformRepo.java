@@ -16,4 +16,12 @@ public interface IXslTransformRepo {
      * @return The xslt file to execute transformations.
      */
     XslTransformETY getXsltByTemplateId(String templateId);
+    
+    /**
+     * Returns the XSLT file given its Mongo ID 
+     * @param id  The Mongo ID 
+     * @return XslTransformETY  The entity saved in the database 
+     */
+    XslTransformETY getById(final String id); 
+    
 }

@@ -64,6 +64,7 @@ import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.DocumentReferenceDT
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.enums.TransformALGEnum;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.BusinessException;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.helper.FHIRR4Helper;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.IXslTransformRepo;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.entity.XslTransformETY;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.scheduler.UpdateSingletonScheduler;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.IFhirResourceSRV;
@@ -91,6 +92,10 @@ class FHIRMappingLabTests {
 
 	@Autowired
 	MongoTemplate mongoTemplate;
+	
+	@Autowired
+	IXslTransformRepo xslTransformRepo; 
+	
 
 	@BeforeEach
 	void setup() {
@@ -135,6 +140,8 @@ class FHIRMappingLabTests {
 	@ValueSource(strings = "RefertoDiLaboratorio.json")
 	void customCdaTest(final String outputFilePath) {
 
+		XslTransformETY ety = xslTransformRepo.getXsltByTemplateId("2.16.840.1.113883.2.9.10.1.1"); 
+		
 		final byte[] xslt = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/ref_med_lab.xsl");
 		assumeFalse(xslt == null, "XSLT file is required for the purpose of the test");
 
@@ -162,7 +169,7 @@ class FHIRMappingLabTests {
 
 		DocumentReferenceDTO documentReferenceDTO = new DocumentReferenceDTO(
 				1000, UUID.randomUUID().toString(), "facilityTypeCode", new ArrayList<>(), "practiceSettingCode", "tipoDocumentoLivAlto", "repositoryUniqueID", null, null, "identificativoDoc");
-		final String jsonFhir = fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO);
+		final String jsonFhir = fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO, ety.getId()); 
 		assertNotNull(jsonFhir, "Transformation not handled correctly");
 
 		try (FileWriter fw = new FileWriter(outputFilePath, false)) {
@@ -234,7 +241,7 @@ class FHIRMappingLabTests {
 
 		final byte[] cda = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/CDA_Referto_di _Medicina_di_Laboratorio_ES2_Complesso.xml");
 		final DocumentReferenceDTO documentReferenceDTO = new DocumentReferenceDTO(1000, UUID.randomUUID().toString(), "facilityTypeCode", new ArrayList<>(), "practiceSettingCode", "tipoDocumentoLivAlto", "repositoryUniqueID", null, null, "identificativoDoc");
-		fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO);
+		fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO, "2.16.840.1.113883.2.9.10.1.1");
 
 		log.info("Transformation complete");
 
@@ -328,7 +335,7 @@ class FHIRMappingLabTests {
 
 		DocumentReferenceDTO documentReferenceDTO = new DocumentReferenceDTO(1000, UUID.randomUUID().toString(), "facilityTypeCode", new ArrayList<>(), "practiceSettingCode", "tipoDocumentoLivAlto", "repositoryUniqueID", null, null, "identificativoDoc");
 
-		final String jsonFhir = fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO);
+		final String jsonFhir = fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO, "");
 		assertNotNull(jsonFhir, "Transformation not handled correctly");
 		return jsonFhir;
 	}

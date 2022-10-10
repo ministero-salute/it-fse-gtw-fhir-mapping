@@ -40,6 +40,21 @@ public class XslTransformRepo implements IXslTransformRepo {
             throw new BusinessException(String.format("Error while retrieving xslt with template id: %s", templateId), e);
         }
         return xslt;
+    } 
+    
+    @Override
+    public XslTransformETY getById(final String id) {
+        
+        XslTransformETY xslt = null;
+        try {
+            final Query query = new Query();
+            query.addCriteria(Criteria.where("_id").is(id));
+            xslt = mongoTemplate.findOne(query, XslTransformETY.class);
+        } catch (final Exception e) {
+            log.error(String.format("Error while retrieving xslt with Mongo Id: %s", id), e);
+            throw new BusinessException(String.format("Error while retrieving xslt with Mongo ID: %s", id), e);
+        }
+        return xslt;
     }
     
 }
