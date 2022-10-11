@@ -42,7 +42,7 @@ public class TransformCTL implements ITransformCTL {
 
 			if (StringUtility.isNullOrEmpty(output.getErrorMessage())) {
 				String bundleJson = fhirResourceSRV.fromCdaToJson(fhirResourceDTO.getCda(), 
-						fhirResourceDTO.getDocumentReferenceDTO(), fhirResourceDTO.getTransformId()); 
+						fhirResourceDTO.getDocumentReferenceDTO(), fhirResourceDTO.getObjectId()); 
 				output.setJson(Document.parse(bundleJson));
 			}
 			log.debug("Generate document reference - END");

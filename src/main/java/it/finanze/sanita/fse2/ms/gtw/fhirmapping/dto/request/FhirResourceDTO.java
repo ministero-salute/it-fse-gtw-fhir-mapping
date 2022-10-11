@@ -9,8 +9,6 @@ public class FhirResourceDTO {
 	
 	private String cda;
 	
-	private String transformId; 
-	
-	private String structureId; 
-	
+	private String objectId; 
+		
 }
