@@ -42,6 +42,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -93,7 +94,7 @@ class FHIRMappingLabTests {
 	@Autowired
 	MongoTemplate mongoTemplate;
 	
-	@Autowired
+	@SpyBean
 	IXslTransformRepo xslTransformRepo; 
 	
 
@@ -237,24 +238,26 @@ class FHIRMappingLabTests {
 		final String typeIdExtension = TEMPLATE_ID_ROOT;
 		XslTransformSingleton.removeInstance(typeIdExtension);
 
-		log.info("Execution transformation to populate singleton");
+		log.info("Execution transformation to populate singleton"); 
+		
+		String transformId = xslTransformRepo.getXsltByTemplateId("2.16.840.1.113883.2.9.10.1.1").getId(); 
 
 		final byte[] cda = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/CDA_Referto_di _Medicina_di_Laboratorio_ES2_Complesso.xml");
 		final DocumentReferenceDTO documentReferenceDTO = new DocumentReferenceDTO(1000, UUID.randomUUID().toString(), "facilityTypeCode", new ArrayList<>(), "practiceSettingCode", "tipoDocumentoLivAlto", "repositoryUniqueID", null, null, "identificativoDoc");
-		fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO, "2.16.840.1.113883.2.9.10.1.1");
+		fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO, transformId); 
 
 		log.info("Transformation complete");
 
-		XslTransformSingleton instance = XslTransformSingleton.getInstance(typeIdExtension);
+		XslTransformSingleton instance = XslTransformSingleton.getInstance(transformId);
 
 		assertNotNull(instance);
 		assertNotNull(instance.getTransformer());
-		assertEquals(typeIdExtension, instance.getTypeIdExtension());
+		assertEquals(transformId, instance.getTypeIdExtension());
 		final Date lastUpdate = instance.getDataUltimoAggiornamento();
 		assertNotNull(lastUpdate);
 
 		scheduler.schedulingTask();
-		instance = XslTransformSingleton.getInstance(typeIdExtension);
+		instance = XslTransformSingleton.getInstance(transformId);
 
 		// Executing scheduler when no update has been made to persistence should not have updated singleton
 		assertEquals(lastUpdate, instance.getDataUltimoAggiornamento());
@@ -267,7 +270,7 @@ class FHIRMappingLabTests {
 		mongoTemplate.updateFirst(query, update, XslTransformETY.class);
 
 		scheduler.schedulingTask();
-		instance = XslTransformSingleton.getInstance(typeIdExtension);
+		instance = XslTransformSingleton.getInstance(transformId);
 		assertTrue(instance.getDataUltimoAggiornamento().after(lastUpdate));
 	}
 
@@ -329,13 +332,17 @@ class FHIRMappingLabTests {
 		XslTransformETY xslEntity = new XslTransformETY();
 		xslEntity.setContentXslTransform(new Binary(xslt));
 		xslEntity.setLastUpdateDate(new Date());
-
+		
+		String transformId = xslTransformRepo.getXsltByTemplateId("2.16.840.1.113883.2.9.10.1.1").getId(); 
+		
+		
 		final byte[] cda = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/CDA2_Referto_di_Medicina_di_Laboratorio_ES1_complesso.xml");
 		assertNotNull(cda, "Cda file is required for the purpose of the test");
 
 		DocumentReferenceDTO documentReferenceDTO = new DocumentReferenceDTO(1000, UUID.randomUUID().toString(), "facilityTypeCode", new ArrayList<>(), "practiceSettingCode", "tipoDocumentoLivAlto", "repositoryUniqueID", null, null, "identificativoDoc");
 
-		final String jsonFhir = fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO, "");
+		//when(xslTransformRepo.getById(anyString())).thenReturn()
+		final String jsonFhir = fhirResourceSRV.fromCdaToJson(new String(cda, StandardCharsets.UTF_8), documentReferenceDTO, transformId); 
 		assertNotNull(jsonFhir, "Transformation not handled correctly");
 		return jsonFhir;
 	}
