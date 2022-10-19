@@ -1,3 +1,6 @@
+/*
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
 package it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto;
 
 import org.hl7.fhir.r4.model.Bundle.HTTPVerb;
