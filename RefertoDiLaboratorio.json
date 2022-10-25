@@ -9,300 +9,13 @@
   },
   "type": "transaction",
   "entry": [ {
-    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.2-7247d0e6-710e-46ac-be95-76e5c0c47a85",
-    "resource": {
-      "resourceType": "Organization",
-      "id": "2.16.840.1.113883.2.9.4.1.2-7247d0e6-710e-46ac-be95-76e5c0c47a85",
-      "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.1.2",
-        "value": "7247d0e6-710e-46ac-be95-76e5c0c47a85",
-        "assigner": {
-          "display": "Ministero della Salute"
-        }
-      } ],
-      "name": "[nome_presidio]",
-      "telecom": [ {
-        "system": "phone",
-        "value": "0115678965",
-        "use": "work"
-      } ],
-      "partOf": {
-        "reference": "Organization/2.16.840.1.113883.2.9.4.1.1-5d971f71-f91e-4946-9733-aed75e7809a3"
-      }
-    },
-    "request": {
-      "method": "PUT",
-      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.2|7247d0e6-710e-46ac-be95-76e5c0c47a85"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Observation/organizer-act-section",
-    "resource": {
-      "resourceType": "Observation",
-      "id": "organizer-act-section",
-      "status": "final",
-      "code": {
-        "coding": [ {
-          "system": "urn:oid:"
-        } ]
-      },
-      "effectiveDateTime": "2022-03-22T22:12:21",
-      "specimen": {
-        "reference": "Specimen/specimen-entry-organizer"
-      },
-      "hasMember": [ {
-        "reference": "Observation/has-member-observation1"
-      }, {
-        "reference": "Observation/has-member-observation2"
-      } ]
-    },
-    "request": {
-      "method": "POST",
-      "url": "Observation"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-f6192e3e-913a-457e-88f6-d2dfdb31cc53",
-    "resource": {
-      "resourceType": "Practitioner",
-      "id": "2.16.840.1.113883.2.9.4.3.2-f6192e3e-913a-457e-88f6-d2dfdb31cc53",
-      "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
-        "value": "f6192e3e-913a-457e-88f6-d2dfdb31cc53",
-        "assigner": {
-          "display": "MEF"
-        }
-      } ],
-      "name": [ {
-        "family": "Esposito",
-        "given": [ "Edoardo" ]
-      }, {
-        "text": "###PRIOR###ASSIGNEDENTITY_ASSIGNEDPERSON###PRIOR###"
-      } ]
-    },
-    "request": {
-      "method": "PUT",
-      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|f6192e3e-913a-457e-88f6-d2dfdb31cc53"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-b2c1049a-1c21-4be1-85bd-1f4020b3381a",
-    "resource": {
-      "resourceType": "Practitioner",
-      "id": "2.16.840.1.113883.2.9.4.3.2-b2c1049a-1c21-4be1-85bd-1f4020b3381a",
-      "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
-        "value": "b2c1049a-1c21-4be1-85bd-1f4020b3381a",
-        "assigner": {
-          "display": "MEF"
-        }
-      } ],
-      "name": [ {
-        "family": "Rossi",
-        "given": [ "Maura" ]
-      }, {
-        "text": "###PRIOR###SERVICEEVENT_PERFORMER_ASSIGNEDENTITY_ASSIGNEDPERSON###PRIOR###"
-      } ]
-    },
-    "request": {
-      "method": "PUT",
-      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|b2c1049a-1c21-4be1-85bd-1f4020b3381a"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.3-d868e06b-20d3-42eb-ac27-7d0fed0c2b10",
-    "resource": {
-      "resourceType": "Organization",
-      "id": "2.16.840.1.113883.2.9.4.1.3-d868e06b-20d3-42eb-ac27-7d0fed0c2b10",
-      "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.1.3",
-        "value": "d868e06b-20d3-42eb-ac27-7d0fed0c2b10",
-        "assigner": {
-          "display": "Ministero della Salute"
-        }
-      } ],
-      "name": "Nuovo Ospedale S.Agostino (MO)",
-      "partOf": {
-        "reference": "Organization/2.16.840.1.113883.2.9.4.1.1-815bf115-26c2-4eae-a746-aee9a5c37281"
-      }
-    },
-    "request": {
-      "method": "PUT",
-      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.3|d868e06b-20d3-42eb-ac27-7d0fed0c2b10"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-440a497d-d2cb-4efb-8b99-b51b805ffb19",
-    "resource": {
-      "resourceType": "Practitioner",
-      "id": "2.16.840.1.113883.2.9.4.3.2-440a497d-d2cb-4efb-8b99-b51b805ffb19",
-      "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
-        "value": "440a497d-d2cb-4efb-8b99-b51b805ffb19",
-        "assigner": {
-          "display": "MEF"
-        }
-      } ],
-      "name": [ {
-        "family": "Turri",
-        "given": [ "Silvia" ]
-      }, {
-        "text": "###PRIOR###RESPONSIBLEPARTY_ASSIGNEDENTITY_ASSIGNEDPERSON###PRIOR###"
-      } ]
-    },
-    "request": {
-      "method": "PUT",
-      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|440a497d-d2cb-4efb-8b99-b51b805ffb19"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Specimen/specimen-has-member-observation2",
-    "resource": {
-      "resourceType": "Specimen",
-      "id": "specimen-has-member-observation2"
-    },
-    "request": {
-      "method": "POST",
-      "url": "Specimen"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Specimen/specimen-has-member-observation1",
-    "resource": {
-      "resourceType": "Specimen",
-      "id": "specimen-has-member-observation1"
-    },
-    "request": {
-      "method": "POST",
-      "url": "Specimen"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/DiagnosticReport/diagnostic-report",
-    "resource": {
-      "resourceType": "DiagnosticReport",
-      "id": "diagnostic-report",
-      "text": {
-        "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\"> xxxx </div><table class=\"hapiPropertyTable\"><tbody><tr><td>Status</td><td>FINAL</td></tr></tbody></table><table class=\"hapiTableOfValues\"><thead><tr><td>Name</td><td>Value</td><td>Interpretation</td><td>Reference Range</td><td>Status</td></tr></thead><tbody><tr class=\"hapiTableOfValuesRowOdd\"><td> ? </td><td/><td/><td/><td>FINAL</td></tr></tbody></table></div>"
-      },
-      "status": "final",
-      "code": {
-        "coding": [ {
-          "system": "urn:oid:2.16.840.1.113883.6.1",
-          "code": "xxx",
-          "display": "xxxx"
-        } ]
-      },
-      "subject": {
-        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
-      },
-      "encounter": {
-        "reference": "Encounter/encounter"
-      },
-      "effectiveDateTime": "2022-03-22T22:12:21+01:00",
-      "result": [ {
-        "reference": "Observation/organizer-act-section"
-      } ]
-    },
-    "request": {
-      "method": "POST",
-      "url": "DiagnosticReport"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.2-e5eaf383-8d32-4cfe-8211-507bb6fa549f",
-    "resource": {
-      "resourceType": "Organization",
-      "id": "2.16.840.1.113883.2.9.4.1.2-e5eaf383-8d32-4cfe-8211-507bb6fa549f",
-      "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.1.2",
-        "value": "e5eaf383-8d32-4cfe-8211-507bb6fa549f",
-        "assigner": {
-          "display": "Ministero della Salute"
-        }
-      } ],
-      "name": "SAN RAFFAELE NOMENTANA",
-      "telecom": [ {
-        "system": "phone",
-        "value": " 010337288945",
-        "use": "work"
-      } ],
-      "address": [ {
-        "line": [ "Via Emilio Praga 39" ],
-        "city": "Roma",
-        "district": "RM",
-        "state": "120",
-        "postalCode": "00137",
-        "country": "100"
-      } ]
-    },
-    "request": {
-      "method": "PUT",
-      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.2|e5eaf383-8d32-4cfe-8211-507bb6fa549f"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/PractitionerRole/practitioner-role-performer",
-    "resource": {
-      "resourceType": "PractitionerRole",
-      "id": "practitioner-role-performer",
-      "identifier": [ {
-        "system": "urn:2.16.840.1.113883.2.9.4.3.2-2.16.840.1.113883.2.9.4.1.3",
-        "value": "b2c1049a-1c21-4be1-85bd-1f4020b3381ad868e06b-20d3-42eb-ac27-7d0fed0c2b10"
-      } ],
-      "practitioner": {
-        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-b2c1049a-1c21-4be1-85bd-1f4020b3381a"
-      },
-      "organization": {
-        "reference": "Organization/2.16.840.1.113883.2.9.4.1.3-d868e06b-20d3-42eb-ac27-7d0fed0c2b10"
-      }
-    },
-    "request": {
-      "method": "PUT",
-      "url": "PractitionerRole?identifier=urn:2.16.840.1.113883.2.9.4.3.2-2.16.840.1.113883.2.9.4.1.3|b2c1049a-1c21-4be1-85bd-1f4020b3381ad868e06b-20d3-42eb-ac27-7d0fed0c2b10"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.1-815bf115-26c2-4eae-a746-aee9a5c37281",
-    "resource": {
-      "resourceType": "Organization",
-      "id": "2.16.840.1.113883.2.9.4.1.1-815bf115-26c2-4eae-a746-aee9a5c37281",
-      "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.1.1",
-        "value": "815bf115-26c2-4eae-a746-aee9a5c37281",
-        "assigner": {
-          "display": "Ministero della Salute"
-        }
-      } ]
-    },
-    "request": {
-      "method": "PUT",
-      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.1|815bf115-26c2-4eae-a746-aee9a5c37281"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/ServiceRequest/service-request1",
-    "resource": {
-      "resourceType": "ServiceRequest",
-      "id": "service-request1",
-      "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.9",
-        "value": "[NRE]",
-        "assigner": {
-          "display": "MEF"
-        }
-      } ],
-      "status": "active",
-      "intent": "order",
-      "priority": "routine",
-      "subject": {
-        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
-      },
-      "encounter": {
-        "reference": "Encounter/encounter"
-      }
-    },
-    "request": {
-      "method": "POST",
-      "url": "ServiceRequest"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e",
+    "fullUrl": "https://example.com/base/Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b",
     "resource": {
       "resourceType": "Patient",
-      "id": "2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e",
+      "id": "2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b",
       "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Mario <b>ROSSI </b></div><table class=\"hapiPropertyTable\"><tbody><tr><td>Identifier</td><td>ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e</td></tr><tr><td>Address</td><td><span>Via Aurora 12 </span><br/><span>Roma </span><span>120 </span><span>100 </span></td></tr><tr><td>Date of birth</td><td><span>20 dicembre 1981</span></td></tr></tbody></table></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Mario <b>ROSSI </b></div><table class=\"hapiPropertyTable\"><tbody><tr><td>Identifier</td><td>4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b</td></tr><tr><td>Address</td><td><span>Via Aurora 12 </span><br/><span>Roma </span><span>120 </span><span>100 </span></td></tr><tr><td>Date of birth</td><td><span>20 December 1981</span></td></tr></tbody></table></div>"
       },
       "extension": [ {
         "url": "http://hl7.org/fhir/StructureDefinition/patient-birthPlace",
@@ -314,7 +27,7 @@
       } ],
       "identifier": [ {
         "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
-        "value": "ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e",
+        "value": "4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b",
         "assigner": {
           "display": "MEF"
         }
@@ -354,105 +67,108 @@
     },
     "request": {
       "method": "PUT",
-      "url": "Patient?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
+      "url": "Patient?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
     }
   }, {
-    "fullUrl": "https://example.com/base/PractitionerRole/practitioner-role-responsible-party",
+    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.1-8dd0be46-5301-44ad-90de-f0e1e6300d4e",
     "resource": {
-      "resourceType": "PractitionerRole",
-      "id": "practitioner-role-responsible-party",
-      "practitioner": {
-        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-440a497d-d2cb-4efb-8b99-b51b805ffb19"
-      }
-    },
-    "request": {
-      "method": "POST",
-      "url": "PractitionerRole"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/PractitioneRole/practitioner-role-encounter1",
-    "resource": {
-      "resourceType": "PractitionerRole",
-      "id": "practitioner-role-encounter1",
+      "resourceType": "Organization",
+      "id": "2.16.840.1.113883.2.9.4.1.1-8dd0be46-5301-44ad-90de-f0e1e6300d4e",
       "identifier": [ {
-        "system": "urn:2.16.840.1.113883.2.9.4.3.2-2.16.840.1.113883.2.9.4.1.2",
-        "value": "1a882d75-c50c-4603-b4a7-dee7cf79b5511e9e5032-c631-4803-ad2d-678843cde8bc"
-      } ],
-      "practitioner": {
-        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-1a882d75-c50c-4603-b4a7-dee7cf79b551"
-      },
-      "organization": {
-        "reference": "Organization/2.16.840.1.113883.2.9.4.1.2-1e9e5032-c631-4803-ad2d-678843cde8bc"
-      },
-      "code": [ {
-        "coding": [ {
-          "system": "urn:oid:2.16.840.1.113883.2.9.5.1.88",
-          "code": "PRE",
-          "display": "Prenotatore"
-        } ]
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.1.1",
+        "value": "8dd0be46-5301-44ad-90de-f0e1e6300d4e",
+        "assigner": {
+          "display": "Ministero della Salute"
+        }
       } ]
     },
     "request": {
       "method": "PUT",
-      "url": "PractitionerRole?identifier=urn:2.16.840.1.113883.2.9.4.3.2-2.16.840.1.113883.2.9.4.1.2|1a882d75-c50c-4603-b4a7-dee7cf79b5511e9e5032-c631-4803-ad2d-678843cde8bc"
+      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.1|8dd0be46-5301-44ad-90de-f0e1e6300d4e"
     }
   }, {
-    "fullUrl": "https://example.com/base/PractitionerRole/practitioner-role-authenticator",
-    "resource": {
-      "resourceType": "PractitionerRole",
-      "id": "practitioner-role-authenticator",
-      "practitioner": {
-        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-c78842af-352b-4655-a5cf-0967ee47eeb9"
-      }
-    },
-    "request": {
-      "method": "POST",
-      "url": "PractitionerRole"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-1a882d75-c50c-4603-b4a7-dee7cf79b551",
+    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-d4e85d49-db42-40fb-a307-44871c9f8371",
     "resource": {
       "resourceType": "Practitioner",
-      "id": "2.16.840.1.113883.2.9.4.3.2-1a882d75-c50c-4603-b4a7-dee7cf79b551",
+      "id": "2.16.840.1.113883.2.9.4.3.2-d4e85d49-db42-40fb-a307-44871c9f8371",
       "identifier": [ {
         "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
-        "value": "1a882d75-c50c-4603-b4a7-dee7cf79b551",
+        "value": "d4e85d49-db42-40fb-a307-44871c9f8371",
         "assigner": {
           "display": "MEF"
         }
       } ],
       "name": [ {
-        "family": "Maggi",
-        "given": [ "Silvia" ]
+        "family": "Bianchi",
+        "given": [ "Francesco" ],
+        "prefix": [ "Specialista" ]
       }, {
-        "text": "###PRIOR###PARTICIPANT_ASSOCIATEDENTITY###PRIOR###"
+        "text": "###PRIOR###LEGALAUTHENTICATOR_ASSIGNEDENTITY_ASSIGNEDPERSON###PRIOR###"
       } ],
       "telecom": [ {
         "system": "email",
-        "value": "maggi.silvia@gmail.com",
-        "use": "home"
+        "value": "francesco.bianchi@gmail.com",
+        "use": "work"
+      }, {
+        "system": "phone",
+        "value": "+393441834678",
+        "use": "work"
       } ],
       "address": [ {
-        "line": [ "Via Vittorio Veneto 3" ],
+        "line": [ "Via Milano 7" ],
         "city": "Roma",
         "district": "RM",
         "state": "120",
-        "postalCode": "00187",
+        "postalCode": "00184",
         "country": "100"
       } ]
     },
     "request": {
       "method": "PUT",
-      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|1a882d75-c50c-4603-b4a7-dee7cf79b551"
+      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|d4e85d49-db42-40fb-a307-44871c9f8371"
     }
   }, {
-    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-cce2f1b4-b4b0-4ef5-8824-9a2f9ff5c7ba",
+    "fullUrl": "https://example.com/base/DiagnosticReport/diagnostic-report",
+    "resource": {
+      "resourceType": "DiagnosticReport",
+      "id": "diagnostic-report",
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\"> xxxx </div><table class=\"hapiPropertyTable\"><tbody><tr><td>Status</td><td>FINAL</td></tr></tbody></table><table class=\"hapiTableOfValues\"><thead><tr><td>Name</td><td>Value</td><td>Interpretation</td><td>Reference Range</td><td>Status</td></tr></thead><tbody><tr class=\"hapiTableOfValuesRowOdd\"><td> ? </td><td/><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> ? </td><td/><td/><td/><td>FINAL</td></tr></tbody></table></div>"
+      },
+      "status": "final",
+      "code": {
+        "coding": [ {
+          "system": "urn:oid:2.16.840.1.113883.6.1",
+          "code": "xxx",
+          "display": "xxxx"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
+      },
+      "encounter": {
+        "reference": "Encounter/encounter"
+      },
+      "effectiveDateTime": "2022-03-22T22:12:21+01:00",
+      "result": [ {
+        "reference": "Observation/observation-entry1"
+      }, {
+        "reference": "Observation/observation-entry2"
+      } ]
+    },
+    "request": {
+      "method": "POST",
+      "url": "DiagnosticReport"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-7638a565-ca9b-4fc3-b924-eacd8906a3ed",
     "resource": {
       "resourceType": "Practitioner",
-      "id": "2.16.840.1.113883.2.9.4.3.2-cce2f1b4-b4b0-4ef5-8824-9a2f9ff5c7ba",
+      "id": "2.16.840.1.113883.2.9.4.3.2-7638a565-ca9b-4fc3-b924-eacd8906a3ed",
       "identifier": [ {
         "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
-        "value": "cce2f1b4-b4b0-4ef5-8824-9a2f9ff5c7ba",
+        "value": "7638a565-ca9b-4fc3-b924-eacd8906a3ed",
         "assigner": {
           "display": "MEF"
         }
@@ -484,44 +200,37 @@
     },
     "request": {
       "method": "PUT",
-      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|cce2f1b4-b4b0-4ef5-8824-9a2f9ff5c7ba"
+      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|7638a565-ca9b-4fc3-b924-eacd8906a3ed"
     }
   }, {
-    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-4ee3f8ee-b509-4748-bc10-e660204aa898",
+    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.3-0fc149a1-c281-4ee9-ad1d-bac00d805811",
     "resource": {
-      "resourceType": "Practitioner",
-      "id": "2.16.840.1.113883.2.9.4.3.2-4ee3f8ee-b509-4748-bc10-e660204aa898",
+      "resourceType": "Organization",
+      "id": "2.16.840.1.113883.2.9.4.1.3-0fc149a1-c281-4ee9-ad1d-bac00d805811",
       "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
-        "value": "4ee3f8ee-b509-4748-bc10-e660204aa898",
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.1.3",
+        "value": "0fc149a1-c281-4ee9-ad1d-bac00d805811",
         "assigner": {
-          "display": "MEF"
+          "display": "Ministero della Salute"
         }
       } ],
-      "name": [ {
-        "family": "Rossi",
-        "given": [ "Maura" ]
-      }, {
-        "text": "###PRIOR###INTENDEDRECIPIENT_INFORMATIONRECIPIENT###PRIOR###"
-      } ],
-      "telecom": [ {
-        "system": "phone",
-        "value": "062866794",
-        "use": "work"
-      } ]
+      "name": "Nuovo Ospedale S.Agostino (MO)",
+      "partOf": {
+        "reference": "Organization/2.16.840.1.113883.2.9.4.1.1-8dd0be46-5301-44ad-90de-f0e1e6300d4e"
+      }
     },
     "request": {
       "method": "PUT",
-      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|4ee3f8ee-b509-4748-bc10-e660204aa898"
+      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.3|0fc149a1-c281-4ee9-ad1d-bac00d805811"
     }
   }, {
-    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.1-5d971f71-f91e-4946-9733-aed75e7809a3",
+    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.1-476c6081-5cd6-4836-9a8a-12e035922578",
     "resource": {
       "resourceType": "Organization",
-      "id": "2.16.840.1.113883.2.9.4.1.1-5d971f71-f91e-4946-9733-aed75e7809a3",
+      "id": "2.16.840.1.113883.2.9.4.1.1-476c6081-5cd6-4836-9a8a-12e035922578",
       "identifier": [ {
         "system": "urn:oid:2.16.840.1.113883.2.9.4.1.1",
-        "value": "5d971f71-f91e-4946-9733-aed75e7809a3",
+        "value": "476c6081-5cd6-4836-9a8a-12e035922578",
         "assigner": {
           "display": "Ministero della Salute"
         }
@@ -529,16 +238,219 @@
     },
     "request": {
       "method": "PUT",
-      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.1|5d971f71-f91e-4946-9733-aed75e7809a3"
+      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.1|476c6081-5cd6-4836-9a8a-12e035922578"
     }
   }, {
-    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-c78842af-352b-4655-a5cf-0967ee47eeb9",
+    "fullUrl": "https://example.com/base/PractitionerRole/practitioner-role-performer",
+    "resource": {
+      "resourceType": "PractitionerRole",
+      "id": "practitioner-role-performer",
+      "identifier": [ {
+        "system": "urn:2.16.840.1.113883.2.9.4.3.2-2.16.840.1.113883.2.9.4.1.3",
+        "value": "65d6b6ec-8e0a-4d20-8089-3028935e19700fc149a1-c281-4ee9-ad1d-bac00d805811"
+      } ],
+      "practitioner": {
+        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-65d6b6ec-8e0a-4d20-8089-3028935e1970"
+      },
+      "organization": {
+        "reference": "Organization/2.16.840.1.113883.2.9.4.1.3-0fc149a1-c281-4ee9-ad1d-bac00d805811"
+      }
+    },
+    "request": {
+      "method": "PUT",
+      "url": "PractitionerRole?identifier=urn:2.16.840.1.113883.2.9.4.3.2-2.16.840.1.113883.2.9.4.1.3|65d6b6ec-8e0a-4d20-8089-3028935e19700fc149a1-c281-4ee9-ad1d-bac00d805811"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-9db8c5e5-0e8d-4a13-bbbe-0f1ee9c30d13",
     "resource": {
       "resourceType": "Practitioner",
-      "id": "2.16.840.1.113883.2.9.4.3.2-c78842af-352b-4655-a5cf-0967ee47eeb9",
+      "id": "2.16.840.1.113883.2.9.4.3.2-9db8c5e5-0e8d-4a13-bbbe-0f1ee9c30d13",
       "identifier": [ {
         "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
-        "value": "c78842af-352b-4655-a5cf-0967ee47eeb9",
+        "value": "9db8c5e5-0e8d-4a13-bbbe-0f1ee9c30d13",
+        "assigner": {
+          "display": "MEF"
+        }
+      } ],
+      "name": [ {
+        "family": "Maggi",
+        "given": [ "Silvia" ]
+      }, {
+        "text": "###PRIOR###PARTICIPANT_ASSOCIATEDENTITY###PRIOR###"
+      } ],
+      "telecom": [ {
+        "system": "email",
+        "value": "maggi.silvia@gmail.com",
+        "use": "home"
+      } ],
+      "address": [ {
+        "line": [ "Via Vittorio Veneto 3" ],
+        "city": "Roma",
+        "district": "RM",
+        "state": "120",
+        "postalCode": "00187",
+        "country": "100"
+      } ]
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|9db8c5e5-0e8d-4a13-bbbe-0f1ee9c30d13"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Observation/has-member-observation2-1",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "has-member-observation2-1",
+      "status": "final",
+      "code": {
+        "coding": [ {
+          "system": "urn:oid:2.16.840.1.113883.6.1",
+          "version": "LOINC",
+          "code": "xxx",
+          "display": "xxx"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
+      },
+      "effectiveDateTime": "2022-03-22T22:12:21+01:00",
+      "interpretation": [ {
+        "coding": [ {
+          "system": "urn:oid:2.16.840.1.113883.5.83",
+          "version": "sistema di codifica",
+          "code": "xxx",
+          "display": "xxx"
+        } ]
+      } ],
+      "specimen": {
+        "reference": "Specimen/specimen-entry-organizer1"
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Observation"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Observation/has-member-observation1-1",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "has-member-observation1-1",
+      "status": "final",
+      "code": {
+        "coding": [ {
+          "system": "urn:oid:2.16.840.1.113883.6.1",
+          "version": "LOINC",
+          "code": "xxx",
+          "display": "xxx"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
+      },
+      "effectiveDateTime": "2022-03-22T22:12:21+01:00",
+      "interpretation": [ {
+        "coding": [ {
+          "system": "urn:oid:2.16.840.1.113883.5.83",
+          "version": "sistema di codifica",
+          "code": "xxx",
+          "display": "xxxx"
+        } ]
+      } ],
+      "specimen": {
+        "reference": "Specimen/specimen-entry-organizer1"
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Observation"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/ServiceRequest/service-request1",
+    "resource": {
+      "resourceType": "ServiceRequest",
+      "id": "service-request1",
+      "identifier": [ {
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.9",
+        "value": "[NRE]",
+        "assigner": {
+          "display": "MEF"
+        }
+      } ],
+      "status": "active",
+      "intent": "order",
+      "priority": "routine",
+      "subject": {
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
+      },
+      "encounter": {
+        "reference": "Encounter/encounter"
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "ServiceRequest"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/PractitionerRole/practitioner-role-responsible-party",
+    "resource": {
+      "resourceType": "PractitionerRole",
+      "id": "practitioner-role-responsible-party",
+      "practitioner": {
+        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-ac40ca63-2d14-4a31-ad06-c13aa1a19bd1"
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "PractitionerRole"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/PractitioneRole/practitioner-role-encounter1",
+    "resource": {
+      "resourceType": "PractitionerRole",
+      "id": "practitioner-role-encounter1",
+      "identifier": [ {
+        "system": "urn:2.16.840.1.113883.2.9.4.3.2-2.16.840.1.113883.2.9.4.1.2",
+        "value": "9db8c5e5-0e8d-4a13-bbbe-0f1ee9c30d13cd930b6b-130d-492d-8497-7be213b58699"
+      } ],
+      "practitioner": {
+        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-9db8c5e5-0e8d-4a13-bbbe-0f1ee9c30d13"
+      },
+      "organization": {
+        "reference": "Organization/2.16.840.1.113883.2.9.4.1.2-cd930b6b-130d-492d-8497-7be213b58699"
+      },
+      "code": [ {
+        "coding": [ {
+          "system": "urn:oid:2.16.840.1.113883.2.9.5.1.88",
+          "code": "PRE",
+          "display": "Prenotatore"
+        } ]
+      } ]
+    },
+    "request": {
+      "method": "PUT",
+      "url": "PractitionerRole?identifier=urn:2.16.840.1.113883.2.9.4.3.2-2.16.840.1.113883.2.9.4.1.2|9db8c5e5-0e8d-4a13-bbbe-0f1ee9c30d13cd930b6b-130d-492d-8497-7be213b58699"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/PractitionerRole/practitioner-role-authenticator",
+    "resource": {
+      "resourceType": "PractitionerRole",
+      "id": "practitioner-role-authenticator",
+      "practitioner": {
+        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-eabc6c72-3ff4-4173-a83a-75fdb0ccaf17"
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "PractitionerRole"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-eabc6c72-3ff4-4173-a83a-75fdb0ccaf17",
+    "resource": {
+      "resourceType": "Practitioner",
+      "id": "2.16.840.1.113883.2.9.4.3.2-eabc6c72-3ff4-4173-a83a-75fdb0ccaf17",
+      "identifier": [ {
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
+        "value": "eabc6c72-3ff4-4173-a83a-75fdb0ccaf17",
         "assigner": {
           "display": "MEF"
         }
@@ -569,7 +481,35 @@
     },
     "request": {
       "method": "PUT",
-      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|c78842af-352b-4655-a5cf-0967ee47eeb9"
+      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|eabc6c72-3ff4-4173-a83a-75fdb0ccaf17"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-5984a3c2-3af4-4e41-8fe9-fa9271a53bcb",
+    "resource": {
+      "resourceType": "Practitioner",
+      "id": "2.16.840.1.113883.2.9.4.3.2-5984a3c2-3af4-4e41-8fe9-fa9271a53bcb",
+      "identifier": [ {
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
+        "value": "5984a3c2-3af4-4e41-8fe9-fa9271a53bcb",
+        "assigner": {
+          "display": "MEF"
+        }
+      } ],
+      "name": [ {
+        "family": "Rossi",
+        "given": [ "Maura" ]
+      }, {
+        "text": "###PRIOR###INTENDEDRECIPIENT_INFORMATIONRECIPIENT###PRIOR###"
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "062866794",
+        "use": "work"
+      } ]
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|5984a3c2-3af4-4e41-8fe9-fa9271a53bcb"
     }
   }, {
     "fullUrl": "https://example.com/base/Location/location-encompassing-encounter",
@@ -584,7 +524,7 @@
         }
       } ],
       "managingOrganization": {
-        "reference": "Organization/2.16.840.1.113883.2.9.4.1.2-7247d0e6-710e-46ac-be95-76e5c0c47a85"
+        "reference": "Organization/2.16.840.1.113883.2.9.4.1.2-be591758-d2de-46d8-8a6f-4341916222e8"
       },
       "partOf": {
         "reference": "Location/facility-location"
@@ -595,30 +535,44 @@
       "url": "Location"
     }
   }, {
-    "fullUrl": "https://example.com/base/PractitionerRole/practitioner-role-legal-aut",
-    "resource": {
-      "resourceType": "PractitionerRole",
-      "id": "practitioner-role-legal-aut",
-      "practitioner": {
-        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-a8483692-111c-4f65-8f71-b5d9e260b5cb"
-      }
-    },
-    "request": {
-      "method": "POST",
-      "url": "PractitionerRole"
-    }
-  }, {
-    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.2-1e9e5032-c631-4803-ad2d-678843cde8bc",
+    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.2-be591758-d2de-46d8-8a6f-4341916222e8",
     "resource": {
       "resourceType": "Organization",
-      "id": "2.16.840.1.113883.2.9.4.1.2-1e9e5032-c631-4803-ad2d-678843cde8bc",
+      "id": "2.16.840.1.113883.2.9.4.1.2-be591758-d2de-46d8-8a6f-4341916222e8",
       "identifier": [ {
         "system": "urn:oid:2.16.840.1.113883.2.9.4.1.2",
-        "value": "1e9e5032-c631-4803-ad2d-678843cde8bc",
+        "value": "be591758-d2de-46d8-8a6f-4341916222e8",
         "assigner": {
           "display": "Ministero della Salute"
         }
       } ],
+      "name": "[nome_presidio]",
+      "telecom": [ {
+        "system": "phone",
+        "value": "0115678965",
+        "use": "work"
+      } ],
+      "partOf": {
+        "reference": "Organization/2.16.840.1.113883.2.9.4.1.1-476c6081-5cd6-4836-9a8a-12e035922578"
+      }
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.2|be591758-d2de-46d8-8a6f-4341916222e8"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.2-73efe1cc-d069-4969-90fb-f9cb4d91567b",
+    "resource": {
+      "resourceType": "Organization",
+      "id": "2.16.840.1.113883.2.9.4.1.2-73efe1cc-d069-4969-90fb-f9cb4d91567b",
+      "identifier": [ {
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.1.2",
+        "value": "73efe1cc-d069-4969-90fb-f9cb4d91567b",
+        "assigner": {
+          "display": "Ministero della Salute"
+        }
+      } ],
+      "name": "SAN RAFFAELE NOMENTANA",
       "telecom": [ {
         "system": "phone",
         "value": " 010337288945",
@@ -635,75 +589,43 @@
     },
     "request": {
       "method": "PUT",
-      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.2|1e9e5032-c631-4803-ad2d-678843cde8bc"
+      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.2|73efe1cc-d069-4969-90fb-f9cb4d91567b"
     }
   }, {
-    "fullUrl": "https://example.com/base/Observation/has-member-observation1",
+    "fullUrl": "https://example.com/base/PractitionerRole/practitioner-role-legal-aut",
     "resource": {
-      "resourceType": "Observation",
-      "id": "has-member-observation1",
-      "status": "final",
-      "code": {
-        "coding": [ {
-          "system": "urn:oid:2.16.840.1.113883.6.1",
-          "version": "LOINC",
-          "code": "xxx",
-          "display": "xxx"
-        } ]
-      },
-      "subject": {
-        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
-      },
-      "effectiveDateTime": "2022-03-22T22:12:21+01:00",
-      "interpretation": [ {
-        "coding": [ {
-          "system": "urn:oid:2.16.840.1.113883.5.83",
-          "version": "sistema di codifica",
-          "code": "xxx",
-          "display": "xxxx"
-        } ]
-      } ],
-      "specimen": {
-        "reference": "Specimen/specimen-has-member-observation1"
+      "resourceType": "PractitionerRole",
+      "id": "practitioner-role-legal-aut",
+      "practitioner": {
+        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-d4e85d49-db42-40fb-a307-44871c9f8371"
       }
     },
     "request": {
       "method": "POST",
-      "url": "Observation"
+      "url": "PractitionerRole"
     }
   }, {
-    "fullUrl": "https://example.com/base/Observation/has-member-observation2",
+    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-65d6b6ec-8e0a-4d20-8089-3028935e1970",
     "resource": {
-      "resourceType": "Observation",
-      "id": "has-member-observation2",
-      "status": "final",
-      "code": {
-        "coding": [ {
-          "system": "urn:oid:2.16.840.1.113883.6.1",
-          "version": "LOINC",
-          "code": "xxx",
-          "display": "xxx"
-        } ]
-      },
-      "subject": {
-        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
-      },
-      "effectiveDateTime": "2022-03-22T22:12:21+01:00",
-      "interpretation": [ {
-        "coding": [ {
-          "system": "urn:oid:2.16.840.1.113883.5.83",
-          "version": "sistema di codifica",
-          "code": "xxx",
-          "display": "xxx"
-        } ]
+      "resourceType": "Practitioner",
+      "id": "2.16.840.1.113883.2.9.4.3.2-65d6b6ec-8e0a-4d20-8089-3028935e1970",
+      "identifier": [ {
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
+        "value": "65d6b6ec-8e0a-4d20-8089-3028935e1970",
+        "assigner": {
+          "display": "MEF"
+        }
       } ],
-      "specimen": {
-        "reference": "Specimen/specimen-has-member-observation2"
-      }
+      "name": [ {
+        "family": "Rossi",
+        "given": [ "Maura" ]
+      }, {
+        "text": "###PRIOR###SERVICEEVENT_PERFORMER_ASSIGNEDENTITY_ASSIGNEDPERSON###PRIOR###"
+      } ]
     },
     "request": {
-      "method": "POST",
-      "url": "Observation"
+      "method": "PUT",
+      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|65d6b6ec-8e0a-4d20-8089-3028935e1970"
     }
   }, {
     "fullUrl": "https://example.com/base/Encounter/encounter",
@@ -717,7 +639,7 @@
         "display": "inpatient encounter"
       },
       "subject": {
-        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
       },
       "basedOn": [ {
         "reference": "ServiceRequest/service-request1"
@@ -800,23 +722,23 @@
         } ]
       },
       "subject": {
-        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
       },
       "encounter": {
         "reference": "Encounter/encounter"
       },
       "date": "2022-03-22T22:12:21+01:00",
       "author": [ {
-        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-cce2f1b4-b4b0-4ef5-8824-9a2f9ff5c7ba"
+        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-7638a565-ca9b-4fc3-b924-eacd8906a3ed"
       }, {
-        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-f6192e3e-913a-457e-88f6-d2dfdb31cc53"
+        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-b660e258-981f-406f-bdf4-e1a1f928acd8"
       } ],
       "title": " REFERTO DI LABORATORIO",
       "confidentiality": "N",
       "attester": [ {
         "mode": "professional",
         "party": {
-          "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-4ee3f8ee-b509-4748-bc10-e660204aa898"
+          "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-5984a3c2-3af4-4e41-8fe9-fa9271a53bcb"
         }
       }, {
         "mode": "legal",
@@ -832,7 +754,7 @@
         }
       } ],
       "custodian": {
-        "reference": "Organization/2.16.840.1.113883.2.9.4.1.2-e5eaf383-8d32-4cfe-8211-507bb6fa549f"
+        "reference": "Organization/2.16.840.1.113883.2.9.4.1.2-73efe1cc-d069-4969-90fb-f9cb4d91567b"
       },
       "event": [ {
         "period": {
@@ -860,10 +782,6 @@
               "display": "xxx"
             } ]
           },
-          "text": {
-            "status": "generated",
-            "div": "<div xmlns=\"http://hl7.org/fhir\" value=\"xxxxx\"/>"
-          },
           "entry": [ {
             "reference": "DiagnosticReport/diagnostic-report"
           } ]
@@ -876,10 +794,6 @@
               "display": "xxx"
             } ]
           },
-          "text": {
-            "status": "generated",
-            "div": "<div xmlns=\"http://hl7.org/fhir\" value=\"xxxxx\"/>"
-          },
           "entry": [ {
             "reference": "DiagnosticReport/diagnostic-report"
           } ]
@@ -889,6 +803,59 @@
     "request": {
       "method": "POST",
       "url": "Composition"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Organization/2.16.840.1.113883.2.9.4.1.2-cd930b6b-130d-492d-8497-7be213b58699",
+    "resource": {
+      "resourceType": "Organization",
+      "id": "2.16.840.1.113883.2.9.4.1.2-cd930b6b-130d-492d-8497-7be213b58699",
+      "identifier": [ {
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.1.2",
+        "value": "cd930b6b-130d-492d-8497-7be213b58699",
+        "assigner": {
+          "display": "Ministero della Salute"
+        }
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": " 010337288945",
+        "use": "work"
+      } ],
+      "address": [ {
+        "line": [ "Via Emilio Praga 39" ],
+        "city": "Roma",
+        "district": "RM",
+        "state": "120",
+        "postalCode": "00137",
+        "country": "100"
+      } ]
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Organization?identifier=urn:oid:2.16.840.1.113883.2.9.4.1.2|cd930b6b-130d-492d-8497-7be213b58699"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Observation/observation-entry2",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "observation-entry2",
+      "status": "final",
+      "code": {
+        "coding": [ {
+          "system": "urn:oid:"
+        } ]
+      },
+      "effectiveDateTime": "2022-03-22T22:12:21+01:00",
+      "specimen": {
+        "reference": "Specimen/specimen-entry-organizer2"
+      },
+      "hasMember": [ {
+        "reference": "Observation/has-member-observation2-1"
+      } ]
+    },
+    "request": {
+      "method": "POST",
+      "url": "Observation"
     }
   }, {
     "fullUrl": "https://example.com/base/Location/facility-location",
@@ -901,45 +868,27 @@
       "url": "Location"
     }
   }, {
-    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-a8483692-111c-4f65-8f71-b5d9e260b5cb",
+    "fullUrl": "https://example.com/base/Observation/observation-entry1",
     "resource": {
-      "resourceType": "Practitioner",
-      "id": "2.16.840.1.113883.2.9.4.3.2-a8483692-111c-4f65-8f71-b5d9e260b5cb",
-      "identifier": [ {
-        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
-        "value": "a8483692-111c-4f65-8f71-b5d9e260b5cb",
-        "assigner": {
-          "display": "MEF"
-        }
-      } ],
-      "name": [ {
-        "family": "Bianchi",
-        "given": [ "Francesco" ],
-        "prefix": [ "Specialista" ]
-      }, {
-        "text": "###PRIOR###LEGALAUTHENTICATOR_ASSIGNEDENTITY_ASSIGNEDPERSON###PRIOR###"
-      } ],
-      "telecom": [ {
-        "system": "email",
-        "value": "francesco.bianchi@gmail.com",
-        "use": "work"
-      }, {
-        "system": "phone",
-        "value": "+393441834678",
-        "use": "work"
-      } ],
-      "address": [ {
-        "line": [ "Via Milano 7" ],
-        "city": "Roma",
-        "district": "RM",
-        "state": "120",
-        "postalCode": "00184",
-        "country": "100"
+      "resourceType": "Observation",
+      "id": "observation-entry1",
+      "status": "final",
+      "code": {
+        "coding": [ {
+          "system": "urn:oid:"
+        } ]
+      },
+      "effectiveDateTime": "2022-03-22T22:12:21",
+      "specimen": {
+        "reference": "Specimen/specimen-entry-organizer1"
+      },
+      "hasMember": [ {
+        "reference": "Observation/has-member-observation1-1"
       } ]
     },
     "request": {
-      "method": "PUT",
-      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|a8483692-111c-4f65-8f71-b5d9e260b5cb"
+      "method": "POST",
+      "url": "Observation"
     }
   }, {
     "fullUrl": "https://example.com/base/DocumentReference/document-reference",
@@ -947,7 +896,7 @@
       "resourceType": "DocumentReference",
       "id": "document-reference",
       "masterIdentifier": {
-        "id": "identificativoDoc"
+        "value": "identificativoDoc"
       },
       "identifier": [ {
         "id": "Document00"
@@ -966,14 +915,14 @@
         } ]
       } ],
       "subject": {
-        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
       },
-      "date": "2022-09-29T09:53:47.288+02:00",
+      "date": "2022-10-25T12:40:02.071+02:00",
       "author": [ {
-        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-cce2f1b4-b4b0-4ef5-8824-9a2f9ff5c7ba"
+        "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-7638a565-ca9b-4fc3-b924-eacd8906a3ed"
       } ],
       "custodian": {
-        "reference": "Organization/2.16.840.1.113883.2.9.4.1.2-e5eaf383-8d32-4cfe-8211-507bb6fa549f"
+        "reference": "Organization/2.16.840.1.113883.2.9.4.1.2-73efe1cc-d069-4969-90fb-f9cb4d91567b"
       },
       "securityLabel": [ {
         "coding": [ {
@@ -987,7 +936,7 @@
           "language": "it-IT",
           "url": "repositoryUniqueID",
           "size": 1000,
-          "hash": "ZWMzMDFlZTMtN2M2MS00ODY0LTkwNWQtYjZiYmJjZGE3MWFh"
+          "hash": "ZjdiZjVjZGEtNjJhYi00YWE0LWE4YmEtYWQyMzlhZTY4Yjkw"
         },
         "format": {
           "system": "urn:oid:2.16.840.1.113883.2.9.10.1.1",
@@ -997,18 +946,18 @@
       "context": {
         "facilityType": {
           "coding": [ {
-            "system": "http://example.org",
+            "system": "urn:oid",
             "code": "facilityTypeCode"
           } ]
         },
         "practiceSetting": {
           "coding": [ {
-            "system": "http://example.org",
+            "system": "urn:oid",
             "code": "practiceSettingCode"
           } ]
         },
         "sourcePatientInfo": {
-          "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
+          "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
         },
         "related": [ {
           "reference": "Composition/composition"
@@ -1020,10 +969,10 @@
       "url": "DocumentReference"
     }
   }, {
-    "fullUrl": "https://example.com/base/Specimen/specimen-entry-organizer",
+    "fullUrl": "https://example.com/base/Specimen/specimen-entry-organizer1",
     "resource": {
       "resourceType": "Specimen",
-      "id": "specimen-entry-organizer",
+      "id": "specimen-entry-organizer1",
       "type": {
         "coding": [ {
           "system": "urn:oid:1.1.1.1.1.1.1.1.1.1",
@@ -1032,7 +981,73 @@
         } ]
       },
       "subject": {
-        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-ff09a4af-3753-4b18-9a1f-b82b9f1c8f5e"
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
+      }
+    },
+    "request": {
+      "method": "POST",
+      "url": "Specimen"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-ac40ca63-2d14-4a31-ad06-c13aa1a19bd1",
+    "resource": {
+      "resourceType": "Practitioner",
+      "id": "2.16.840.1.113883.2.9.4.3.2-ac40ca63-2d14-4a31-ad06-c13aa1a19bd1",
+      "identifier": [ {
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
+        "value": "ac40ca63-2d14-4a31-ad06-c13aa1a19bd1",
+        "assigner": {
+          "display": "MEF"
+        }
+      } ],
+      "name": [ {
+        "family": "Turri",
+        "given": [ "Silvia" ]
+      }, {
+        "text": "###PRIOR###RESPONSIBLEPARTY_ASSIGNEDENTITY_ASSIGNEDPERSON###PRIOR###"
+      } ]
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|ac40ca63-2d14-4a31-ad06-c13aa1a19bd1"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Practitioner/2.16.840.1.113883.2.9.4.3.2-b660e258-981f-406f-bdf4-e1a1f928acd8",
+    "resource": {
+      "resourceType": "Practitioner",
+      "id": "2.16.840.1.113883.2.9.4.3.2-b660e258-981f-406f-bdf4-e1a1f928acd8",
+      "identifier": [ {
+        "system": "urn:oid:2.16.840.1.113883.2.9.4.3.2",
+        "value": "b660e258-981f-406f-bdf4-e1a1f928acd8",
+        "assigner": {
+          "display": "MEF"
+        }
+      } ],
+      "name": [ {
+        "family": "Esposito",
+        "given": [ "Edoardo" ]
+      }, {
+        "text": "###PRIOR###ASSIGNEDENTITY_ASSIGNEDPERSON###PRIOR###"
+      } ]
+    },
+    "request": {
+      "method": "PUT",
+      "url": "Practitioner?identifier=urn:oid:2.16.840.1.113883.2.9.4.3.2|b660e258-981f-406f-bdf4-e1a1f928acd8"
+    }
+  }, {
+    "fullUrl": "https://example.com/base/Specimen/specimen-entry-organizer2",
+    "resource": {
+      "resourceType": "Specimen",
+      "id": "specimen-entry-organizer2",
+      "type": {
+        "coding": [ {
+          "system": "urn:oid:1.1.1.1.1.1.1.1",
+          "code": "xxxxxx",
+          "display": "xxx"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-4c39ef12-5dfb-4f4c-aa38-3af70e5ac60b"
       }
     },
     "request": {

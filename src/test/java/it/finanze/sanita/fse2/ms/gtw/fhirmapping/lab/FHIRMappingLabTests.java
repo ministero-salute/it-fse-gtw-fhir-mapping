@@ -5,6 +5,7 @@ package it.finanze.sanita.fse2.ms.gtw.fhirmapping.lab;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.mockito.BDDMockito.given;
@@ -81,6 +82,7 @@ import lombok.extern.slf4j.Slf4j;
 class FHIRMappingLabTests {
 
 	private static final String TEMPLATE_ID_ROOT = "2.16.840.1.113883.2.9.10.1.1";
+	private static final String TEMPLATE_ID_ROOT_DELETED = "2.16.840.1.113883.2.9.10.1.2";
 
 	@Autowired
 	IFhirResourceSRV fhirResourceSRV;
@@ -102,17 +104,19 @@ class FHIRMappingLabTests {
 	void setup() {
 		String nomeFile = "ref_med_lab.xsl";
 		removeByFilename(nomeFile);
-		XslTransformETY transformETY = buildXslETY(nomeFile, TEMPLATE_ID_ROOT);
+		XslTransformETY transformETY = buildXslETY(nomeFile, TEMPLATE_ID_ROOT, false);
+		XslTransformETY transformETYDeleted = buildXslETY(nomeFile, TEMPLATE_ID_ROOT_DELETED, true);
 		mongoTemplate.save(transformETY);
+		mongoTemplate.save(transformETYDeleted); 
 	}
 
 	private void removeByFilename(String nomeFile) {
 		Query query = new Query();
-		query.addCriteria(Criteria.where("name_xsl_transform").is(nomeFile));
+		query.addCriteria(Criteria.where("name_xsl_transform").is(nomeFile).and("deleted").is(false));
 		mongoTemplate.remove(query, XslTransformETY.class);
 	}
 
-	private XslTransformETY buildXslETY(String nomeFile,String templateIdRoot) {
+	private XslTransformETY buildXslETY(String nomeFile,String templateIdRoot, Boolean deleted) {
 		byte[] content = FileUtility.getFileFromInternalResources("referto-medicina-laboratorio/example/"+nomeFile);
 		XslTransformETY transformETY = new XslTransformETY();
 		transformETY.setLastUpdateDate(new Date());
@@ -120,6 +124,7 @@ class FHIRMappingLabTests {
 		transformETY.setTemplateIdRoot(templateIdRoot);
 		transformETY.setTemplateIdExtension("1.0");
 		transformETY.setContentXslTransform(new Binary(BsonBinarySubType.BINARY, content));
+		transformETY.setDeleted(deleted); 
 		
 		return transformETY;
 	}
@@ -324,6 +329,13 @@ class FHIRMappingLabTests {
 		result.getMessages().stream().filter(msg -> !ResultSeverityEnum.INFORMATION.equals(msg.getSeverity())).forEach(msg -> log.error("{} - {}", msg.getSeverity(), msg.getMessage()));
 		// assertTrue(result.isSuccessful(), "Validation of CDA should have been successful");
 		// assertTrue(result.getMessages().stream().noneMatch(msg -> !ResultSeverityEnum.INFORMATION.equals(msg.getSeverity())), "No errors or warnings should have been found");
+	}
+	
+	@Test
+	void testRetrieveEtyDeleted() {
+		XslTransformETY transformEty = xslTransformRepo.getXsltByTemplateId(TEMPLATE_ID_ROOT_DELETED); 
+		
+		assertNull(transformEty); 
 	}
 
 	private String transformAndGet() {

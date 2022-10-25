@@ -34,6 +34,9 @@ public class XslTransformETY {
 	private String templateIdExtension;
 	
 	@Field(name = "last_update_date")
-    private Date lastUpdateDate;
+    private Date lastUpdateDate; 
+	
+	@Field(name = "deleted")
+    private Boolean deleted;
 
 }

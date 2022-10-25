@@ -988,7 +988,7 @@
       "subject": {
         "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-RSSMRA81T20H501L"
       },
-      "date": "2022-10-05T18:16:21.503+02:00",
+      "date": "2022-10-25T12:40:01.266+02:00",
       "author": [ {
         "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-BNCFNC68R09F839P"
       } ],
@@ -1007,7 +1007,7 @@
           "language": "it-IT",
           "url": "repositoryUniqueID",
           "size": 1000,
-          "hash": "OGViY2ZlNGItNmMwNC00M2Y3LWE4MDMtMGQ0M2Q0ZTk1MGE2"
+          "hash": "Y2UzMGY5NDgtMGVlZS00YzE3LTk0ZTYtN2ZiZTU3NjU2YjVi"
         },
         "format": {
           "system": "urn:oid:2.16.840.1.113883.2.9.10.1.1",
