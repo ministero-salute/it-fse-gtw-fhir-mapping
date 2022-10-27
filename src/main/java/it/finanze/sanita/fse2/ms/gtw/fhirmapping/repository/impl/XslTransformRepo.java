@@ -3,6 +3,8 @@
  */
 package it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -46,12 +48,15 @@ public class XslTransformRepo implements IXslTransformRepo {
     } 
     
     @Override
-    public XslTransformETY getById(final String id) {
+    public XslTransformETY getById(final String id, final Date fiveDayAgo) {
         
         XslTransformETY xslt = null;
         try {
             final Query query = new Query();
-            query.addCriteria(Criteria.where("_id").is(id).and("deleted").is(false));
+            Criteria criteria = new Criteria();
+            criteria.orOperator(Criteria.where("_id").is(id).and("deleted").is(false),
+            		Criteria.where("_id").is(id).and("deleted").is(true).and("last_update_date").lt(fiveDayAgo));
+            query.addCriteria(criteria);
             xslt = mongoTemplate.findOne(query, XslTransformETY.class);
         } catch (final Exception e) {
             log.error(String.format("Error while retrieving xslt with Mongo Id: %s", id), e);

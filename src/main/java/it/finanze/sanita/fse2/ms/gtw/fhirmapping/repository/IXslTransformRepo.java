@@ -3,6 +3,8 @@
  */
 package it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository;
 
+import java.util.Date;
+
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.entity.XslTransformETY;
 
 /**
@@ -25,6 +27,6 @@ public interface IXslTransformRepo {
      * @param id  The Mongo ID 
      * @return XslTransformETY  The entity saved in the database 
      */
-    XslTransformETY getById(final String id); 
+    XslTransformETY getById(String id, Date fiveDayAgo);
     
 }

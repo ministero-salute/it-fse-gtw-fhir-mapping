@@ -5,6 +5,7 @@ package it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,13 +40,13 @@ import it.finanze.sanita.fse2.ms.gtw.fhirmapping.enums.TransformALGEnum;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.enums.WeightFhirResEnum;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.BusinessException;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions.MissingXsltException;
-import it.finanze.sanita.fse2.ms.gtw.fhirmapping.helper.CDAHelper;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.helper.DocumentReferenceHelper;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.helper.FHIRR4Helper;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.IXslTransformRepo;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.entity.XslTransformETY;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.IFhirResourceSRV;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.singleton.XslTransformSingleton;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.utility.DateUtility;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.utility.StringUtility;
 import lombok.extern.slf4j.Slf4j;
 
@@ -149,7 +150,8 @@ public class FhirResourceSRV implements IFhirResourceSRV {
 		if (singleton != null) {
 			transformer = singleton.getTransformer();
 		} else {
-			final XslTransformETY xslEntity = xsltRepo.getById(id); // Singleton is empty
+			Date fiveDayAgo = DateUtility.addDay(new Date(), -5); //TODO - Cambiare con props dinamica
+			final XslTransformETY xslEntity = xsltRepo.getById(id,fiveDayAgo); // Singleton is empty
 			if (xslEntity != null) {
 				transformer = FHIRR4Helper.compileXslt(xslEntity.getContentXslTransform().getData());
 				XslTransformSingleton.updateInstance(id,transformer);

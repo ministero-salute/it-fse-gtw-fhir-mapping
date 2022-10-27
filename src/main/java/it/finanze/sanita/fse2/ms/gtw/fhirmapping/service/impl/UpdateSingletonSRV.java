@@ -4,6 +4,7 @@
 package it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.impl;
 
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -18,6 +19,7 @@ import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.IXslTransformRepo;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.entity.XslTransformETY;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.IUpdateSingletonSRV;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.singleton.XslTransformSingleton;
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.utility.DateUtility;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -38,7 +40,8 @@ public class UpdateSingletonSRV implements IUpdateSingletonSRV {
 				final String id = entry.getKey();
 				final XslTransformSingleton singleton = entry.getValue();
 
-				final XslTransformETY template = xslTransformRepo.getById(id); 
+				Date fiveDayAgo = DateUtility.addDay(new Date(), -5); //TODO - Cambiare con props dinamica
+				final XslTransformETY template = xslTransformRepo.getById(id,fiveDayAgo); 
 				if (template == null) {
 					log.debug("The record with id {} has been removed from database", id);
 					XslTransformSingleton.removeInstance(id);
