@@ -5,6 +5,7 @@ package it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.impl;
 
 import java.util.Date;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -54,8 +55,8 @@ public class XslTransformRepo implements IXslTransformRepo {
         try {
             final Query query = new Query();
             Criteria criteria = new Criteria();
-            criteria.orOperator(Criteria.where("_id").is(id).and("deleted").is(false),
-            		Criteria.where("_id").is(id).and("deleted").is(true).and("last_update_date").lt(fiveDayAgo));
+            criteria.orOperator(Criteria.where("_id").is(new ObjectId(id)).and("deleted").is(false),
+            		Criteria.where("_id").is(new ObjectId(id)).and("deleted").is(true).and("last_update_date").gt(fiveDayAgo));
             query.addCriteria(criteria);
             xslt = mongoTemplate.findOne(query, XslTransformETY.class);
         } catch (final Exception e) {

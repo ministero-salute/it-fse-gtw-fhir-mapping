@@ -14,6 +14,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.finanze.sanita.fse2.ms.gtw.fhirmapping.config.FhirTransformCFG;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.helper.FHIRR4Helper;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.IXslTransformRepo;
 import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.entity.XslTransformETY;
@@ -28,6 +29,9 @@ public class UpdateSingletonSRV implements IUpdateSingletonSRV {
 
 	@Autowired
 	private IXslTransformRepo xslTransformRepo;
+	
+	@Autowired
+	private FhirTransformCFG transformCFG;
 
 	@Override
 	public void updateSingletonInstance() {
@@ -40,7 +44,7 @@ public class UpdateSingletonSRV implements IUpdateSingletonSRV {
 				final String id = entry.getKey();
 				final XslTransformSingleton singleton = entry.getValue();
 
-				Date fiveDayAgo = DateUtility.addDay(new Date(), -5); //TODO - Cambiare con props dinamica
+				Date fiveDayAgo = DateUtility.addDay(new Date(), -transformCFG.getDaysAllowToPublishAfterValidation()); 
 				final XslTransformETY template = xslTransformRepo.getById(id,fiveDayAgo); 
 				if (template == null) {
 					log.debug("The record with id {} has been removed from database", id);

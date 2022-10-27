@@ -150,7 +150,7 @@ public class FhirResourceSRV implements IFhirResourceSRV {
 		if (singleton != null) {
 			transformer = singleton.getTransformer();
 		} else {
-			Date fiveDayAgo = DateUtility.addDay(new Date(), -5); //TODO - Cambiare con props dinamica
+			Date fiveDayAgo = DateUtility.addDay(new Date(), -fhirTransformCFG.getDaysAllowToPublishAfterValidation()); 
 			final XslTransformETY xslEntity = xsltRepo.getById(id,fiveDayAgo); // Singleton is empty
 			if (xslEntity != null) {
 				transformer = FHIRR4Helper.compileXslt(xslEntity.getContentXslTransform().getData());

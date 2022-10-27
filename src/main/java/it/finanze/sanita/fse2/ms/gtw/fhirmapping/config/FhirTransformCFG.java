@@ -16,4 +16,7 @@ public class FhirTransformCFG {
 
 	@Value("${fhir.transform.alg}")
 	private TransformALGEnum algToRemoveDuplicate;
+	
+	@Value("${days.allow-publish-after-validation}")
+	private Integer daysAllowToPublishAfterValidation;
 }

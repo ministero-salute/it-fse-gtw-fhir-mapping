@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author vincenzoingenito
  *
- *	Document reference controller.
+ *	Transform controller.
  */
 @Slf4j
 @RestController
