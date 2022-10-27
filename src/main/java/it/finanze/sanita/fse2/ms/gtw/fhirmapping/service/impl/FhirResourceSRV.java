@@ -66,12 +66,12 @@ public class FhirResourceSRV implements IFhirResourceSRV {
  
 
     @Override
-    public String fromCdaToJson(String cda, final DocumentReferenceDTO documentReferenceDTO) {
+    public String fromCdaToJson(String cda, final DocumentReferenceDTO documentReferenceDTO, String transformId) {
         try {
-            final String templateId = CDAHelper.extractTemplateId(cda);
-            log.debug("Executing transformation of CDA with template id: {}", templateId);
+            //final String templateId = CDAHelper.extractTemplateId(cda);
+            log.debug("Executing transformation of CDA with template id: {}", transformId);
             
-			final Transformer transform = getXsltTransform(templateId);
+			final Transformer transform = getXsltTransform(transformId);
 
             if (transform != null) {
             	cda = cda.replace("xmlns=\"urn:hl7-org:v3\"", "").replace("xmlns:mif=\"urn:hl7-org:v3/mif\"", "");
@@ -135,7 +135,7 @@ public class FhirResourceSRV implements IFhirResourceSRV {
                 
                 return FHIRR4Helper.serializeResource(bundle, true, false, false);
             } else {
-                throw new MissingXsltException(String.format("Xslt for cda with template id %s not found in database", templateId));
+                throw new MissingXsltException(String.format("Xslt for cda with template id %s not found in database", transformId));
             }
         } catch (Exception e) {
             log.error("Error while executing transformation of CDA in fhir resource.", e);
@@ -143,18 +143,18 @@ public class FhirResourceSRV implements IFhirResourceSRV {
         }
     }
 
-	private Transformer getXsltTransform(String templateId) {
-		final XslTransformSingleton singleton = XslTransformSingleton.getInstance(templateId);
+	private Transformer getXsltTransform(String id) {
+		final XslTransformSingleton singleton = XslTransformSingleton.getInstance(id);
 		Transformer transformer = null;
 		if (singleton != null) {
 			transformer = singleton.getTransformer();
 		} else {
-			final XslTransformETY xslEntity = xsltRepo.getXsltByTemplateId(templateId); // Singleton is empty
+			final XslTransformETY xslEntity = xsltRepo.getById(id); // Singleton is empty
 			if (xslEntity != null) {
 				transformer = FHIRR4Helper.compileXslt(xslEntity.getContentXslTransform().getData());
-				XslTransformSingleton.updateInstance(templateId,transformer);
+				XslTransformSingleton.updateInstance(id,transformer);
 			} else {
-				throw new BusinessException("Attention , xslt not found with template id : " + templateId);
+				throw new BusinessException("Attention , xslt not found with Mongo id : " + id);
 			}
 		}
 

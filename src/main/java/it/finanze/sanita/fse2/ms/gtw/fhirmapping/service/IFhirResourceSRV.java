@@ -18,5 +18,5 @@ public interface IFhirResourceSRV {
      * @param cda Cda to transform into Fhir resource.
      * @return Json Fhir resource.
      */
-	String fromCdaToJson(String cda, DocumentReferenceDTO documentReferenceDTO);
+	String fromCdaToJson(String cda, DocumentReferenceDTO documentReferenceDTO, String transformId);
 }

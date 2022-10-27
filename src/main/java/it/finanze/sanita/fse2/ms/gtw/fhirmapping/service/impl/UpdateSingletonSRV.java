@@ -35,17 +35,17 @@ public class UpdateSingletonSRV implements IUpdateSingletonSRV {
 		if (!MapUtils.isEmpty(currentInstances)) {
 			for (Entry<String, XslTransformSingleton> entry : currentInstances.entrySet()) {
 
-				final String templateId = entry.getKey();
+				final String id = entry.getKey();
 				final XslTransformSingleton singleton = entry.getValue();
 
-				final XslTransformETY template = xslTransformRepo.getXsltByTemplateId(templateId);
+				final XslTransformETY template = xslTransformRepo.getById(id); 
 				if (template == null) {
-					log.debug("The template with id {} has been removed from database", templateId);
-					XslTransformSingleton.removeInstance(templateId);
+					log.debug("The record with id {} has been removed from database", id);
+					XslTransformSingleton.removeInstance(id);
 				} else if (template.getLastUpdateDate().after(singleton.getDataUltimoAggiornamento())) {
 					log.debug("Updating singleton with a newer version");
 					Transformer transform = FHIRR4Helper.compileXslt(template.getContentXslTransform().getData());
-					XslTransformSingleton.updateInstance(templateId, transform);
+					XslTransformSingleton.updateInstance(id, transform);
 				}
 			}
 		}
