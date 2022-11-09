@@ -573,7 +573,7 @@
       "id": "2.16.840.1.113883.2.9.4.3.2-RSSMRA81T20H501L",
       "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Mario <b>ROSSI </b></div><table class=\"hapiPropertyTable\"><tbody><tr><td>Identifier</td><td>RSSMRA81T20H501L</td></tr><tr><td>Address</td><td><span>Via Aurora 12 </span><br/><span>Roma </span><span>120 </span><span>100 </span></td></tr><tr><td>Date of birth</td><td><span>20 December 1981</span></td></tr></tbody></table></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Mario <b>ROSSI </b></div><table class=\"hapiPropertyTable\"><tbody><tr><td>Identifier</td><td>RSSMRA81T20H501L</td></tr><tr><td>Address</td><td><span>Via Aurora 12 </span><br/><span>Roma </span><span>120 </span><span>100 </span></td></tr><tr><td>Date of birth</td><td><span>20 dicembre 1981</span></td></tr></tbody></table></div>"
       },
       "extension": [ {
         "url": "http://hl7.org/fhir/StructureDefinition/patient-birthPlace",
@@ -988,7 +988,7 @@
       "subject": {
         "reference": "Patient/2.16.840.1.113883.2.9.4.3.2-RSSMRA81T20H501L"
       },
-      "date": "2022-10-25T12:40:01.266+02:00",
+      "date": "2022-11-09T15:42:07.227+01:00",
       "author": [ {
         "reference": "Practitioner/2.16.840.1.113883.2.9.4.3.2-BNCFNC68R09F839P"
       } ],
@@ -1007,7 +1007,7 @@
           "language": "it-IT",
           "url": "repositoryUniqueID",
           "size": 1000,
-          "hash": "Y2UzMGY5NDgtMGVlZS00YzE3LTk0ZTYtN2ZiZTU3NjU2YjVi"
+          "hash": "YjdiNjEyOTgtMWEzNC00NzQwLWJlYjUtNDVjMTk1ZjcxY2Rk"
         },
         "format": {
           "system": "urn:oid:2.16.840.1.113883.2.9.10.1.1",

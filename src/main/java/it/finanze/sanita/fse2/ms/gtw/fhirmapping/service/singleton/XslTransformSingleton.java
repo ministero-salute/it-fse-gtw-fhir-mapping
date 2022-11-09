@@ -4,8 +4,7 @@
 package it.finanze.sanita.fse2.ms.gtw.fhirmapping.service.singleton;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.transform.Transformer;
 
@@ -27,10 +26,10 @@ public class XslTransformSingleton {
 	private final Date dataUltimoAggiornamento;
     
     @Getter
-    private static Map<String, XslTransformSingleton> mapInstance;
+    private static ConcurrentHashMap<String, XslTransformSingleton> mapInstance;
     
     @Getter
-    private static Map<String, Transformer> transformerInstance;
+    private static ConcurrentHashMap<String, Transformer> transformerInstance;
     
     @Getter
 	private final Transformer transformer;
@@ -52,7 +51,7 @@ public class XslTransformSingleton {
 		if(mapInstance != null) {
 			instance = mapInstance.get(typeIdExtension);
 		} else {
-			mapInstance = new HashMap<>();
+			mapInstance = new ConcurrentHashMap<>();
 		}
 
 		return instance;
@@ -60,7 +59,7 @@ public class XslTransformSingleton {
 
     public static void updateInstance(final String typeIdExtension,final Transformer transformer) {
 		if(mapInstance == null) { 
-			mapInstance = new HashMap<>();
+			mapInstance = new ConcurrentHashMap<>();
 		}
 		
         synchronized(XslTransformSingleton.class) {
