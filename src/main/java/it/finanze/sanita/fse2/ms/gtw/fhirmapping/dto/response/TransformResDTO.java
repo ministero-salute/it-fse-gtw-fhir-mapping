@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 
 /**
  * 
- * @author vincenzoingenito
  *
  *	DTO used to return document reference creation result.
  */

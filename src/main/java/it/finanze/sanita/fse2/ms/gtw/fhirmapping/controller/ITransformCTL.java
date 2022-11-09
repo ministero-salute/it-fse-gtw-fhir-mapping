@@ -22,7 +22,6 @@ import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.response.ErrorResponseDTO;
 
 /**
  * 
- * @author vincenzoingenito
  *
  *	Controller document reference.
  */

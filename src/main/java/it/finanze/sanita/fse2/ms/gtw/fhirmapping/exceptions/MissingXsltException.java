@@ -6,7 +6,6 @@ package it.finanze.sanita.fse2.ms.gtw.fhirmapping.exceptions;
 /**
  * Exception to be thrown whenever an xslt file is not found on database but is required.
  * 
- * @author Simone Lungarella
  */
 public class MissingXsltException extends RuntimeException {
     

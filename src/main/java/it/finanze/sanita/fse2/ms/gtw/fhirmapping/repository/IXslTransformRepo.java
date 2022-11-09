@@ -10,7 +10,6 @@ import it.finanze.sanita.fse2.ms.gtw.fhirmapping.repository.entity.XslTransformE
 /**
  * Interface of repository that consent to fetch and elaborate data from xsl_transform.
  * 
- * @author Simone Lungarella 
  */
 public interface IXslTransformRepo {
     

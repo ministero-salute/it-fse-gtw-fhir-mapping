@@ -8,7 +8,6 @@ import it.finanze.sanita.fse2.ms.gtw.fhirmapping.dto.request.DocumentReferenceDT
 /**
  * Interface of fhir resource service.
  * 
- * @author Simone Lungarella
  */
 public interface IFhirResourceSRV {
     

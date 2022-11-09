@@ -53,7 +53,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Service that handle json Fhir resources.
  * 
- * @author Simone Lungarella
  */
 @Slf4j
 @Service

@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Repository used to retrieve xslt data to execute transformation of cda documents.
  * 
- * @author Simone Lungarella
  */
 @Slf4j
 @Repository
