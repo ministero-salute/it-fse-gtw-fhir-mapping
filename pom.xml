@@ -6,7 +6,7 @@
 	<groupId>it.finanze.sanita.fse2</groupId>
 	<artifactId>gtw-fhir-mapping-ms</artifactId>
 	<name>gtw-fhir-mapping-ms</name>
-	<version>0.0.6-SNAPSHOT</version> <!-- SPRINT6 -->
+	<version>0.2.0-SNAPSHOT</version> <!-- IPPOCRATE -->
 	<description>FSE Gateway Fhir Mapping</description>
 
 	<parent>
